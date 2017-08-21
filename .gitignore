@@ -1,0 +1,18 @@
+.project
+.idea
+.chef
+.arcconfig
+.vagrant
+**/.DS_Store
+.rspec
+.DS_Store
+
+# Berkshelf
+.vagrant
+Berksfile.lock
+
+# Bundler
+bin/*
+.bundle/*
+
+*.log
