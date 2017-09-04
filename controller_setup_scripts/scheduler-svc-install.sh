@@ -21,6 +21,7 @@ EOF
 
 sed -i s/CONTROLLER_IP/$CONTROLLER_IP/g  kube-scheduler.service
 
+sudo systemctl stop kube-scheduler
 sudo mv kube-scheduler.service /etc/systemd/system/
 sudo systemctl daemon-reload
 sudo systemctl enable kube-scheduler
