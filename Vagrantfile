@@ -243,10 +243,11 @@ Vagrant.configure(VAGRANT_API) do |config|
     worker_transfer_kubeconfig_files(worker)
     worker.vm.provision :shell, :path => "worker_setup_scripts/worker-setup.sh"
     worker.vm.provision :shell, :path => "worker_setup_scripts/worker-bin-install.sh"
-    worker.vm.provision :shell, :path => "worker_setup_scripts/docker-setup.sh"
-    worker.vm.provision :shell, :path => "worker_setup_scripts/kube-proxy-setup.sh"
+    worker.vm.provision :shell, :path => "worker_setup_scripts/docker-bin-install.sh"
+    worker.vm.provision :shell, :path => "worker_setup_scripts/docker-svc-install.sh"
+    worker.vm.provision :shell, :path => "worker_setup_scripts/kubeproxy-svc-install.sh"
     worker.vm.provision :shell,
-                        :path => "worker_setup_scripts/kubelet-setup.sh",
+                        :path => "worker_setup_scripts/kubelet-svc-install.sh",
                         :args => [CONTROLLER1_IP,CONTROLLER2_IP,CONTROLLER3_IP]
 
   end
@@ -271,10 +272,11 @@ Vagrant.configure(VAGRANT_API) do |config|
     worker_transfer_kubeconfig_files(worker)
     worker.vm.provision :shell, :path => "worker_setup_scripts/worker-setup.sh"
     worker.vm.provision :shell, :path => "worker_setup_scripts/worker-bin-install.sh"
-    worker.vm.provision :shell, :path => "worker_setup_scripts/docker-setup.sh"
-    worker.vm.provision :shell, :path => "worker_setup_scripts/kube-proxy-setup.sh"
+    worker.vm.provision :shell, :path => "worker_setup_scripts/docker-bin-install.sh"
+    worker.vm.provision :shell, :path => "worker_setup_scripts/docker-svc-install.sh"
+    worker.vm.provision :shell, :path => "worker_setup_scripts/kubeproxy-svc-install.sh"
     worker.vm.provision :shell,
-                        :path => "worker_setup_scripts/kubelet-setup.sh",
+                        :path => "worker_setup_scripts/kubelet-svc-install.sh",
                         :args => [CONTROLLER1_IP,CONTROLLER2_IP,CONTROLLER3_IP]
 
   end
