@@ -19,7 +19,7 @@ RestartSec=5
 WantedBy=multi-user.target
 EOF
 
-
+sudo systemctl stop docker
 sudo mv docker.service /etc/systemd/system/docker.service
 sudo systemctl daemon-reload
 sudo systemctl enable docker

@@ -7,9 +7,8 @@ Documentation=https://github.com/GoogleCloudPlatform/kubernetes
 
 [Service]
 ExecStart=/usr/bin/kube-proxy \
-  --cluster-cidr=10.200.0.0/16 \
-  --masquerade-all=true \
-  --kubeconfig=/var/lib/kube-proxy/kube-proxy.kubeconfig \
+  --master=https://10.240.0.10:6443 \
+  --kubeconfig=/var/lib/kubelet/kubeconfig \
   --proxy-mode=iptables \
   --v=2
 Restart=on-failure
@@ -19,7 +18,7 @@ RestartSec=5
 WantedBy=multi-user.target
 EOF
 
-
+sudo systemctl stop kube-proxy
 sudo mv kube-proxy.service /etc/systemd/system/kube-proxy.service
 sudo systemctl daemon-reload
 sudo systemctl enable kube-proxy
