@@ -4,6 +4,11 @@ __**NOTE:**__ These commands assume the node IPs from the `Vagrantfile` have not
 
 ### Check the cluster health
 ```
+etcdctl --ca-file=/etc/etcd/ca.pem cluster-health
+```
+or
+
+```
 sudo etcdctl  \
 --cert-file=/etc/etcd/kubernetes.pem  \
 --key-file=/etc/etcd/kubernetes-key.pem  \

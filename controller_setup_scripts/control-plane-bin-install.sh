@@ -23,7 +23,7 @@ wget --no-verbose https://storage.googleapis.com/kubernetes-release/release/v1.7
 
 echo "*** download and install kube-kubectl ***"
 #wget --no-verbose https://storage.googleapis.com/kubernetes-release/release/v1.6.4/bin/linux/amd64/kubectl
-wget --no-verbose https://storage.googleapis.com/kubernetes-release/release/v1.7.0/bin/darwin/amd64/kubectl
+wget --no-verbose https://storage.googleapis.com/kubernetes-release/release/v1.7.0/bin/linux/amd64/kubectl
 
 echo "*** install kubernetes binaries ***"
 chmod +x kube-apiserver kube-controller-manager kube-scheduler kubectl

@@ -14,7 +14,7 @@ Documentation=https://github.com/coreos
 
 [Service]
 ExecStart=/usr/bin/etcd \
-  --name ${ETCD_NAME} \
+  --name ETCD_NAME \
   --cert-file=/etc/etcd/kubernetes.pem \
   --key-file=/etc/etcd/kubernetes-key.pem \
   --peer-cert-file=/etc/etcd/kubernetes.pem \
@@ -28,7 +28,7 @@ ExecStart=/usr/bin/etcd \
   --listen-client-urls https://NODE_IP:2379,http://127.0.0.1:2379 \
   --advertise-client-urls https://NODE_IP:2379 \
   --initial-cluster-token etcd-cluster \
-  --initial-cluster etcd=https://ETCD1_IP:2380,etcd2=https://ETCD2_IP:2380,etcd3=https://ETCD3_IP:2380 \
+  --initial-cluster etcd1=https://ETCD1_IP:2380,etcd2=https://ETCD2_IP:2380,etcd3=https://ETCD3_IP:2380 \
   --initial-cluster-state new \
   --data-dir=/var/lib/etcd
 Restart=on-failure
@@ -39,7 +39,7 @@ WantedBy=multi-user.target
 EOF
 
 
-sed-i s/ETCD_NAME/$ETCD_NAME/g etcd.service
+sed -i s/ETCD_NAME/$ETCD_NAME/g etcd.service
 sed -i s/NODE_IP/$NODE_IP/g etcd.service
 sed -i s/ETCD1_IP/$ETCD1_IP/g etcd.service
 sed -i s/ETCD2_IP/$ETCD2_IP/g etcd.service

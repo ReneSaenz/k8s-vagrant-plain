@@ -1,5 +1,7 @@
 #!/bin/bash
 
+# Generate Certificate Authority and private key
+
 DIR_IN="cert_config_files"
 DIR_OUT="certs_generated"
 

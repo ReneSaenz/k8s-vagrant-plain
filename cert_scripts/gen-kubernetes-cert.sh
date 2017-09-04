@@ -1,5 +1,7 @@
 #!/bin/bash
 
+# Generate the Kubernetes TLS certificate
+
 DIR_IN="cert_config_files"
 DIR_OUT="certs_generated"
 

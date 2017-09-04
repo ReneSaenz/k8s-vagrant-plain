@@ -10,6 +10,8 @@ cat > auth_generated/token.csv <<EOF
 ${BOOTSTRAP_TOKEN},kubelet-bootstrap,10001,"system:kubelet-bootstrap"
 EOF
 
+KUBERNETES_PUBLIC_ADDRESS = "192.68.50.11"
+
 kubectl config set-cluster kubernetes-the-hard-way \
   --certificate-authority=certs_generated/ca.pem \
   --embed-certs=true \
