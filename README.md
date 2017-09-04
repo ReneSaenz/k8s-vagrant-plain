@@ -4,9 +4,10 @@ This setup follows [Kubernetes the hard way](https://github.com/kelseyhightower/
 
 ## Cluster info
 
-- Kubernetes 1.7.4
+- Kubernetes 1.6.4
 - Docker 1.12.6
 - etcd 3.1.4
+- Secure communication between all components (etcd, controllers, workers)
 
 ### What is missing
 Since this is a local vagrant setup, no DNS and LB is setup.
