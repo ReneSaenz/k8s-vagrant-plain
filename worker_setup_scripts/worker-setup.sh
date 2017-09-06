@@ -8,4 +8,4 @@ echo "*** create /var/lib/kubernetes ***"
 sudo mkdir -p /var/lib/kubernetes
 
 echo "*** move certificates to /var/lib/kubernetes ***"
-sudo cp ca.pem kubernetes-key.pem kubernetes.pem /var/lib/kubernetes/
+sudo cp ca.pem kubernetes.pem kubernetes-key.pem /var/lib/kubernetes/

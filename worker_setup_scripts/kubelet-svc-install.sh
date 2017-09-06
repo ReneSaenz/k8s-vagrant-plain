@@ -27,8 +27,9 @@ ExecStart=/usr/bin/kubelet \
   --reconcile-cidr=true \
   --serialize-image-pulls=false \
   --tls-cert-file=/var/lib/kubelet/kubernetes.pem \
-  --tls-private-key-file=/var/lib/kubelet/kubernetes-key.pem \
+  --tls-private-key-file=/var/lib/kubernetes/kubernetes-key.pem \
   --v=2
+
 Restart=on-failure
 RestartSec=5
 

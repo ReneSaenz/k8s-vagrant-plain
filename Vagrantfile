@@ -39,18 +39,14 @@ def controller_transfer_certs(controller)
   controller.vm.provision :file, :source => "certs_generated/kubernetes.pem", :destination => "kubernetes.pem"
   controller.vm.provision :file, :source => "certs_generated/kubernetes-key.pem", :destination => "kubernetes-key.pem"
   controller.vm.provision :file, :source => "authentication/token.csv", :destination => "token.csv"
-  controller.vm.provision :file, :source => "authentication/authentication-policy.jsonl", :destination => "authentication-policy.jsonl"
+  controller.vm.provision :file, :source => "authentication/authorization-policy.jsonl", :destination => "authorization-policy.jsonl"
 end
 
 def worker_transfer_certs(worker)
   worker.vm.provision :file, :source => "certs_generated/ca.pem", :destination => "ca.pem"
-  worker.vm.provision :file, :source => "certs_generated/kube-proxy.pem", :destination => "kube-proxy.pem"
-  worker.vm.provision :file, :source => "certs_generated/kube-proxy-key.pem", :destination => "kube-proxy-key.pem"
-end
-
-def worker_transfer_kubeconfig_files(worker)
-  worker.vm.provision :file, :source => "auth_generated/bootstrap.kubeconfig", :destination => "bootstrap.kubeconfig"
-  worker.vm.provision :file, :source => "auth_generated/kube-proxy.kubeconfig", :destination => "kube-proxy.kubeconfig"
+  worker.vm.provision :file, :source => "certs_generated/ca-key.pem", :destination => "ca-key.pem"
+  worker.vm.provision :file, :source => "certs_generated/kubernetes.pem", :destination => "kubernetes.pem"
+  worker.vm.provision :file, :source => "certs_generated/kubernetes-key.pem", :destination => "kubernetes-key.pem"
 end
 
 
@@ -129,7 +125,7 @@ Vagrant.configure(VAGRANT_API) do |config|
 
     controller.vm.provision :shell,
                  :path => "controller_setup_scripts/etcd-svc-install.sh",
-                 :args => [ETCD1_NAME,CONTROLLER1_IP,ETCD1_IP,ETCD2_IP,ETCD3_IP]
+                 :args => [ETCD2_NAME,CONTROLLER2_IP,ETCD1_IP,ETCD2_IP,ETCD3_IP]
 
     controller.vm.provision :shell, :path => "controller_setup_scripts/control-plane-bin-install.sh"
 
@@ -170,7 +166,7 @@ Vagrant.configure(VAGRANT_API) do |config|
 
     controller.vm.provision :shell,
                  :path => "controller_setup_scripts/etcd-svc-install.sh",
-                 :args => [ETCD1_NAME,CONTROLLER1_IP,ETCD1_IP,ETCD2_IP,ETCD3_IP]
+                 :args => [ETCD3_NAME,CONTROLLER3_IP,ETCD1_IP,ETCD2_IP,ETCD3_IP]
 
     controller.vm.provision :shell, :path => "controller_setup_scripts/control-plane-bin-install.sh"
 
@@ -211,12 +207,12 @@ Vagrant.configure(VAGRANT_API) do |config|
 
     ## provision
     worker_transfer_certs(worker)
-    worker_transfer_kubeconfig_files(worker)
     worker.vm.provision :shell, :path => "worker_setup_scripts/worker-setup.sh"
     worker.vm.provision :shell, :path => "worker_setup_scripts/worker-bin-install.sh"
     worker.vm.provision :shell, :path => "worker_setup_scripts/docker-bin-install.sh"
     worker.vm.provision :shell, :path => "worker_setup_scripts/docker-svc-install.sh"
     worker.vm.provision :shell, :path => "worker_setup_scripts/kubeproxy-svc-install.sh"
+    worker.vm.provision :shell, :path => "worker_setup_scripts/generate-kubeconfig.sh"
     worker.vm.provision :shell,
                         :path => "worker_setup_scripts/kubelet-svc-install.sh",
                         :args => [CONTROLLER1_IP,CONTROLLER2_IP,CONTROLLER3_IP]
@@ -240,12 +236,12 @@ Vagrant.configure(VAGRANT_API) do |config|
 
     ## provision
     worker_transfer_certs(worker)
-    worker_transfer_kubeconfig_files(worker)
     worker.vm.provision :shell, :path => "worker_setup_scripts/worker-setup.sh"
     worker.vm.provision :shell, :path => "worker_setup_scripts/worker-bin-install.sh"
     worker.vm.provision :shell, :path => "worker_setup_scripts/docker-bin-install.sh"
     worker.vm.provision :shell, :path => "worker_setup_scripts/docker-svc-install.sh"
     worker.vm.provision :shell, :path => "worker_setup_scripts/kubeproxy-svc-install.sh"
+    worker.vm.provision :shell, :path => "worker_setup_scripts/generate-kubeconfig.sh"
     worker.vm.provision :shell,
                         :path => "worker_setup_scripts/kubelet-svc-install.sh",
                         :args => [CONTROLLER1_IP,CONTROLLER2_IP,CONTROLLER3_IP]
@@ -269,12 +265,12 @@ Vagrant.configure(VAGRANT_API) do |config|
 
     ## provision
     worker_transfer_certs(worker)
-    worker_transfer_kubeconfig_files(worker)
     worker.vm.provision :shell, :path => "worker_setup_scripts/worker-setup.sh"
     worker.vm.provision :shell, :path => "worker_setup_scripts/worker-bin-install.sh"
     worker.vm.provision :shell, :path => "worker_setup_scripts/docker-bin-install.sh"
     worker.vm.provision :shell, :path => "worker_setup_scripts/docker-svc-install.sh"
     worker.vm.provision :shell, :path => "worker_setup_scripts/kubeproxy-svc-install.sh"
+    worker.vm.provision :shell, :path => "worker_setup_scripts/generate-kubeconfig.sh"
     worker.vm.provision :shell,
                         :path => "worker_setup_scripts/kubelet-svc-install.sh",
                         :args => [CONTROLLER1_IP,CONTROLLER2_IP,CONTROLLER3_IP]

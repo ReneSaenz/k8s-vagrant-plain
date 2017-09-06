@@ -10,4 +10,4 @@ echo "*** move authorization policy file ***"
 sudo mv authorization-policy.jsonl /var/lib/kubernetes/
 
 echo "*** moving certificates to /var/lib/kubernetes ***"
-sudo mv ca.pem ca-key.pem kubernetes.pem kubernetes-key.pem /var/lib/kubernetes/
+sudo cp ca.pem ca-key.pem kubernetes.pem kubernetes-key.pem /var/lib/kubernetes/

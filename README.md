@@ -18,44 +18,32 @@ Since this is a local vagrant setup, no DNS and LB is setup.
 
 ## Execution
 
-1. Run script to generate certificates `sh generate-certs.sh`
-2. Run `vagrant up`
-3. After all the nodes are up and provisioned, login to one of the controllers<br>`vagrant ssh controller1`
-4. Perform this only on the first controller. Enable TLS bootstrap by
-binding the `kubelet-bootstrap` user to the `system:node-bootstrapper` cluster role
+1. Clone this repo and move into it<br> `git clone https://github.com/ReneSaenz/k8s-vagrant-plain.git && cd k8s-vagrant-plain`
+2. Run script to generate certificates `sh generate-certs.sh`
+3. Run `vagrant up`
+4. After all the nodes are up and provisioned, run script for remote login<br>`sh authentication/remote-cluster-access.sh`
+
+At this point, you should be able to connecto securely to the kubernetes cluster
+```
+kubectl get componentstatuses
+
+NAME                 STATUS    MESSAGE              ERROR
+controller-manager   Healthy   ok                   
+scheduler            Healthy   ok                   
+etcd-2               Healthy   {"health": "true"}   
+etcd-0               Healthy   {"health": "true"}   
+etcd-1               Healthy   {"health": "true"}  
 
 ```
-vagrant ssh controller1
-kubectl create clusterrolebinding kubelet-bootstrap \
-  --clusterrole=system:node-bootstrapper \
-  --user=kubelet-bootstrap
 
-clusterrolebinding "kubelet-bootstrap" created
-```
-5. Still inside controller1, list the pending certificate requests
-
-```
-kubectl get csr
-
-NAME        AGE       REQUESTOR           CONDITION
-csr-XXXXX   1m        kubelet-bootstrap   Pending
-```
-Approve **each** certificate signing request
-
-```
-kubectl certificate approve csr-XXXXX
-certificatesigningrequest "csr-XXXXX" approved
-```
-
-Once all certificate signing requests have been approved all nodes should be registered with the cluster:
 
 ```
 kubectl get nodes
 
-NAME      STATUS    AGE       VERSION
-node1     Ready     7m        v1.6.4
-node2     Ready     5m        v1.6.4
-node3     Ready     2m        v1.6.4
+NAME      STATUS    AGE  
+node1     Ready     7m   
+node2     Ready     5m   
+node3     Ready     2m   
 ```
 
 ## Cluster commands
