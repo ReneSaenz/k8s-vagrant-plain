@@ -4,7 +4,7 @@ This setup follows [Kubernetes the hard way](https://github.com/kelseyhightower/
 
 ## Cluster info
 
-- Kubernetes 1.6.4
+- Kubernetes 1.4.0
 - Docker 1.12.6
 - etcd 3.1.4
 - Secure communication between all components (etcd, controllers, workers)
