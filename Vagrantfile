@@ -99,7 +99,7 @@ Vagrant.configure(VAGRANT_API) do |config|
                  :args => CONTROLLER1_IP
 
     controller.vm.provision :shell,
-                 :path => "controller_setup_scripts/kube-scheduler-setup.sh",
+                 :path => "controller_setup_scripts/scheduler-svc-install.sh",
                  :args => CONTROLLER1_IP
   end
 
@@ -131,7 +131,7 @@ Vagrant.configure(VAGRANT_API) do |config|
                  :args => CONTROLLER2_IP
 
     controller.vm.provision :shell,
-                 :path => "controller_setup_scripts/kube-scheduler-setup.sh",
+                 :path => "controller_setup_scripts/scheduler-svc-install.sh",
                  :args => CONTROLLER2_IP
   end
 
@@ -170,7 +170,7 @@ Vagrant.configure(VAGRANT_API) do |config|
                  :args => CONTROLLER3_IP
 
     controller.vm.provision :shell,
-                 :path => "controller_setup_scripts/kube-scheduler-setup.sh",
+                 :path => "controller_setup_scripts/scheduler-svc-install.sh",
                  :args => CONTROLLER3_IP
   end
 
