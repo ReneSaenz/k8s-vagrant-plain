@@ -41,15 +41,15 @@ def controller_transfer_certs(controller)
   controller.vm.provision :file, :source => "auth_generated/token.csv", :destination => "token.csv"
 end
 
-def node_transfer_certs(node)
-  node.vm.provision :file, :source => "certs_generated/ca.pem", :destination => "ca.pem"
-  node.vm.provision :file, :source => "certs_generated/kube-proxy.pem", :destination => "kube-proxy.pem"
-  node.vm.provision :file, :source => "certs_generated/kube-proxy-key.pem", :destination => "kube-proxy-key.pem"
+def worker_transfer_certs(worker)
+  worker.vm.provision :file, :source => "certs_generated/ca.pem", :destination => "ca.pem"
+  worker.vm.provision :file, :source => "certs_generated/kube-proxy.pem", :destination => "kube-proxy.pem"
+  worker.vm.provision :file, :source => "certs_generated/kube-proxy-key.pem", :destination => "kube-proxy-key.pem"
 end
 
-def node_transfer_kubeconfig_files(node)
-  node.vm.provision :file, :source => "auth_generated/bootstrap.kubeconfig", :destination => "bootstrap.kubeconfig"
-  node.vm.provision :file, :source => "auth_generated/kube-proxy.kubeconfig", :destination => "kube-proxy.kubeconfig"
+def worker_transfer_kubeconfig_files(worker)
+  worker.vm.provision :file, :source => "auth_generated/bootstrap.kubeconfig", :destination => "bootstrap.kubeconfig"
+  worker.vm.provision :file, :source => "auth_generated/kube-proxy.kubeconfig", :destination => "kube-proxy.kubeconfig"
 end
 
 
@@ -117,10 +117,6 @@ Vagrant.configure(VAGRANT_API) do |config|
 
     ## network config
     controller.vm.network :private_network, ip: CONTROLLER1_IP
-
-    #accessing localhost:8080 will access port 80 on the guest machines
-    controller.vm.network "forwarded_port", guest: 9090, host: 9090
-    controller.vm.network "forwarded_port", guest: 80, host: 8080
 
     ## provision
     controller_transfer_certs(controller)
@@ -230,8 +226,8 @@ Vagrant.configure(VAGRANT_API) do |config|
   ### Configure workers
   #########################################
 
-  config.vm.define "worker1" do |node|
-    node.vm.provider :virtualbox do |vb|
+  config.vm.define "worker1" do |worker|
+    worker.vm.provider :virtualbox do |vb|
       vb.gui = false
       vb.name = "k8Worker1"
       vb.cpus = $node_cpus
@@ -239,27 +235,27 @@ Vagrant.configure(VAGRANT_API) do |config|
     end
 
     ## VM hostname
-    node.vm.box = $box
-    node.vm.hostname = "k8Worker1"
+    worker.vm.box = $box
+    worker.vm.hostname = "k8Worker1"
 
     ## Network config
-    node.vm.network :private_network, ip: WORKER1_IP
+    worker.vm.network :private_network, ip: WORKER1_IP
 
     ## provision
-    node_transfer_certs(node)
-    node_transfer_kubeconfig_files(node)
-    node.vm.provision :shell, :path => "worker_setup_scripts/node-setup.sh"
-    node.vm.provision :shell, :path => "worker_setup_scripts/node-bin-install.sh"
-    node.vm.provision :shell, :path => "worker_setup_scripts/docker-setup.sh"
-    node.vm.provision :shell, :path => "worker_setup_scripts/kube-proxy-setup.sh"
-    node.vm.provision :shell,
+    worker_transfer_certs(worker)
+    worker_transfer_kubeconfig_files(worker)
+    worker.vm.provision :shell, :path => "worker_setup_scripts/node-setup.sh"
+    worker.vm.provision :shell, :path => "worker_setup_scripts/node-bin-install.sh"
+    worker.vm.provision :shell, :path => "worker_setup_scripts/docker-setup.sh"
+    worker.vm.provision :shell, :path => "worker_setup_scripts/kube-proxy-setup.sh"
+    worker.vm.provision :shell,
                       :path => "worker_setup_scripts/kubelet-setup.sh",
                       :args => [CONTROLLER1_IP,CONTROLLER2_IP,CONTROLLER3_IP]
 
   end
 
-  config.vm.define "worker2" do |node|
-    node.vm.provider :virtualbox do |vb|
+  config.vm.define "worker2" do |worker|
+    worker.vm.provider :virtualbox do |vb|
       vb.gui = false
       vb.name = "k8Worker2"
       vb.cpus = $node_cpus
@@ -267,27 +263,27 @@ Vagrant.configure(VAGRANT_API) do |config|
     end
 
     ## VM hostname
-    node.vm.box = $box
-    node.vm.hostname = "k8Worker2"
+    worker.vm.box = $box
+    worker.vm.hostname = "k8Worker2"
 
     ## Network config
-    node.vm.network :private_network, ip: WORKER2_IP
+    worker.vm.network :private_network, ip: WORKER2_IP
 
     ## provision
-    node_transfer_certs(node)
-    node_transfer_kubeconfig_files(node)
-    node.vm.provision :shell, :path => "worker_setup_scripts/node-setup.sh"
-    node.vm.provision :shell, :path => "worker_setup_scripts/node-bin-install.sh"
-    node.vm.provision :shell, :path => "worker_setup_scripts/docker-setup.sh"
-    node.vm.provision :shell, :path => "worker_setup_scripts/kube-proxy-setup.sh"
-    node.vm.provision :shell,
+    worker_transfer_certs(worker)
+    worker_transfer_kubeconfig_files(worker)
+    worker.vm.provision :shell, :path => "worker_setup_scripts/node-setup.sh"
+    worker.vm.provision :shell, :path => "worker_setup_scripts/node-bin-install.sh"
+    worker.vm.provision :shell, :path => "worker_setup_scripts/docker-setup.sh"
+    worker.vm.provision :shell, :path => "worker_setup_scripts/kube-proxy-setup.sh"
+    worker.vm.provision :shell,
                       :path => "worker_setup_scripts/kubelet-setup.sh",
                       :args => [CONTROLLER1_IP,CONTROLLER2_IP,CONTROLLER3_IP]
 
   end
 
-  config.vm.define "worker3" do |node|
-    node.vm.provider :virtualbox do |vb|
+  config.vm.define "worker3" do |worker|
+    worker.vm.provider :virtualbox do |vb|
       vb.gui = false
       vb.name = "k8Worker3"
       vb.cpus = $node_cpus
@@ -295,20 +291,20 @@ Vagrant.configure(VAGRANT_API) do |config|
     end
 
     ## VM hostname
-    node.vm.box = $box
-    node.vm.hostname = "k8Worker3"
+    worker.vm.box = $box
+    worker.vm.hostname = "k8Worker3"
 
     ## Network config
-    node.vm.network :private_network, ip: WORKER3_IP
+    worker.vm.network :private_network, ip: WORKER3_IP
 
     ## provision
-    node_transfer_certs(node)
-    node_transfer_kubeconfig_files(node)
-    node.vm.provision :shell, :path => "worker_setup_scripts/node-setup.sh"
-    node.vm.provision :shell, :path => "worker_setup_scripts/node-bin-install.sh"
-    node.vm.provision :shell, :path => "worker_setup_scripts/docker-setup.sh"
-    node.vm.provision :shell, :path => "worker_setup_scripts/kube-proxy-setup.sh"
-    node.vm.provision :shell,
+    worker_transfer_certs(worker)
+    worker_transfer_kubeconfig_files(worker)
+    worker.vm.provision :shell, :path => "worker_setup_scripts/node-setup.sh"
+    worker.vm.provision :shell, :path => "worker_setup_scripts/node-bin-install.sh"
+    worker.vm.provision :shell, :path => "worker_setup_scripts/docker-setup.sh"
+    worker.vm.provision :shell, :path => "worker_setup_scripts/kube-proxy-setup.sh"
+    worker.vm.provision :shell,
                       :path => "worker_setup_scripts/kubelet-setup.sh",
                       :args => [CONTROLLER1_IP,CONTROLLER2_IP,CONTROLLER3_IP]
 
