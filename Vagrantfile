@@ -128,7 +128,7 @@ Vagrant.configure(VAGRANT_API) do |config|
     controller.vm.provision :shell, :path => "controller_setup_scripts/etcd-bin-install.sh"
 
     controller.vm.provision :shell,
-                 :path => "controller_setup_scripts/etcd-setup.sh",
+                 :path => "controller_setup_scripts/etcd-svc-install.sh",
                  :args => [ETCD1_NAME,CONTROLLER1_IP,ETCD1_IP,ETCD2_IP,ETCD3_IP]
 
     controller.vm.provision :shell, :path => "controller_setup_scripts/control-plane-bin-install.sh"
@@ -167,7 +167,7 @@ Vagrant.configure(VAGRANT_API) do |config|
     controller.vm.provision :shell, :path => "controller_setup_scripts/etcd-bin-install.sh"
 
     controller.vm.provision :shell,
-                 :path => "controller_setup_scripts/etcd-setup.sh",
+                 :path => "controller_setup_scripts/etcd-svc-install.sh",
                  :args => [ETCD2_NAME,CONTROLLER2_IP,ETCD1_IP,ETCD2_IP,ETCD3_IP]
 
     controller.vm.provision :shell, :path => "controller_setup_scripts/control-plane-bin-install.sh"
@@ -206,7 +206,7 @@ Vagrant.configure(VAGRANT_API) do |config|
     controller.vm.provision :shell, :path => "controller_setup_scripts/etcd-bin-install.sh"
 
     controller.vm.provision :shell,
-                 :path => "controller_setup_scripts/etcd-setup.sh",
+                 :path => "controller_setup_scripts/etcd-svc-install.sh",
                  :args => [ETCD3_NAME,CONTROLLER3_IP,ETCD1_IP,ETCD2_IP,ETCD3_IP]
 
     controller.vm.provision :shell, :path => "controller_setup_scripts/control-plane-bin-install.sh"

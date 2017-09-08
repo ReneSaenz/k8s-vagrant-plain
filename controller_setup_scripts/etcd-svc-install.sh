@@ -2,7 +2,7 @@
 
 
 ETCD_NAME=$1
-NODE_IP=$2
+WORKER_IP=$2
 ETCD1_IP=$3
 ETCD2_IP=$4
 ETCD3_IP=$5
@@ -23,10 +23,10 @@ ExecStart=/usr/bin/etcd \
   --peer-trusted-ca-file=/etc/etcd/ca.pem \
   --peer-client-cert-auth \
   --client-cert-auth \
-  --initial-advertise-peer-urls https://NODE_IP:2380 \
-  --listen-peer-urls https://NODE_IP:2380 \
-  --listen-client-urls https://NODE_IP:2379,http://127.0.0.1:2379 \
-  --advertise-client-urls https://NODE_IP:2379 \
+  --initial-advertise-peer-urls https://WORKER_IP:2380 \
+  --listen-peer-urls https://WORKER_IP:2380 \
+  --listen-client-urls https://WORKER_IP:2379,http://127.0.0.1:2379 \
+  --advertise-client-urls https://WORKER_IP:2379 \
   --initial-cluster-token etcd-cluster \
   --initial-cluster etcd1=https://ETCD1_IP:2380,etcd2=https://ETCD2_IP:2380,etcd3=https://ETCD3_IP:2380 \
   --initial-cluster-state new \
@@ -40,7 +40,7 @@ EOF
 
 
 sed -i s/ETCD_NAME/$ETCD_NAME/g etcd.service
-sed -i s/NODE_IP/$NODE_IP/g etcd.service
+sed -i s/WORKER_IP/$WORKER_IP/g etcd.service
 sed -i s/ETCD1_IP/$ETCD1_IP/g etcd.service
 sed -i s/ETCD2_IP/$ETCD2_IP/g etcd.service
 sed -i s/ETCD3_IP/$ETCD3_IP/g etcd.service
