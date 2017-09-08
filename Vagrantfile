@@ -85,45 +85,6 @@ Vagrant.configure(VAGRANT_API) do |config|
     controller.vm.provision :shell, :path => "controller_setup_scripts/etcd-bin-install.sh"
 
     controller.vm.provision :shell,
-                 :path => "controller_setup_scripts/etcd-setup.sh",
-                 :args => [ETCD1_NAME,CONTROLLER1_IP,ETCD1_IP,ETCD2_IP,ETCD3_IP]
-
-    controller.vm.provision :shell, :path => "controller_setup_scripts/control-plane-bin-install.sh"
-
-    controller.vm.provision :shell,
-                 :path => "controller_setup_scripts/apiserver-svc-install.sh",
-                 :args => [CONTROLLER1_IP,CONTROLLER1_IP,CONTROLLER2_IP,CONTROLLER3_IP]
-
-    controller.vm.provision :shell,
-                 :path => "controller_setup_scripts/kube-controller-setup.sh",
-                 :args => CONTROLLER1_IP
-
-    controller.vm.provision :shell,
-                 :path => "controller_setup_scripts/kube-scheduler-setup.sh",
-                 :args => CONTROLLER1_IP
-  end
-
-  config.vm.define "controller1" do |controller|
-    controller.vm.provider :virtualbox do |vb|
-      vb.gui = false
-      vb.name = "k8Controller1"
-      vb.cpus = $controller_cpus
-      vb.memory = $controller_vm_memory
-    end
-
-    ## VM box and hostname
-    controller.vm.box = $box
-    controller.vm.hostname = "k8Controller1"
-
-    ## network config
-    controller.vm.network :private_network, ip: CONTROLLER1_IP
-
-    ## provision
-    controller_transfer_certs(controller)
-
-    controller.vm.provision :shell, :path => "controller_setup_scripts/etcd-bin-install.sh"
-
-    controller.vm.provision :shell,
                  :path => "controller_setup_scripts/etcd-svc-install.sh",
                  :args => [ETCD1_NAME,CONTROLLER1_IP,ETCD1_IP,ETCD2_IP,ETCD3_IP]
 
@@ -134,7 +95,7 @@ Vagrant.configure(VAGRANT_API) do |config|
                  :args => [CONTROLLER1_IP,CONTROLLER1_IP,CONTROLLER2_IP,CONTROLLER3_IP]
 
     controller.vm.provision :shell,
-                 :path => "controller_setup_scripts/kube-controller-setup.sh",
+                 :path => "controller_setup_scripts/controller-svc-install.sh",
                  :args => CONTROLLER1_IP
 
     controller.vm.provision :shell,
@@ -164,16 +125,9 @@ Vagrant.configure(VAGRANT_API) do |config|
 
     controller.vm.provision :shell,
                  :path => "controller_setup_scripts/etcd-svc-install.sh",
-                 :args => [ETCD2_NAME,CONTROLLER2_IP,ETCD1_IP,ETCD2_IP,ETCD3_IP]
-
-    controller.vm.provision :shell, :path => "controller_setup_scripts/control-plane-bin-install.sh"
 
     controller.vm.provision :shell,
-                 :path => "controller_setup_scripts/apiserver-svc-install.sh",
-                 :args => [CONTROLLER2_IP,CONTROLLER1_IP,CONTROLLER2_IP,CONTROLLER3_IP]
-
-    controller.vm.provision :shell,
-                 :path => "controller_setup_scripts/kube-controller-setup.sh",
+                 :path => "controller_setup_scripts/controller-svc-install.sh",
                  :args => CONTROLLER2_IP
 
     controller.vm.provision :shell,
@@ -212,7 +166,7 @@ Vagrant.configure(VAGRANT_API) do |config|
                  :args => [CONTROLLER3_IP,CONTROLLER1_IP,CONTROLLER2_IP,CONTROLLER3_IP]
 
     controller.vm.provision :shell,
-                 :path => "controller_setup_scripts/kube-controller-setup.sh",
+                 :path => "controller_setup_scripts/controller-svc-install.sh",
                  :args => CONTROLLER3_IP
 
     controller.vm.provision :shell,
