@@ -3,10 +3,10 @@
 # remove previously generated certificates
 if [ ! -e certs_generated ]; then
 	mkdir -p certs_generated
+else
+	## delete previously generated certificates
+  rm -f certs_generated/*
 fi
-
-## delete previously generated certificates
-rm -f certs_generated/*
 
 ## generate CA
 sh cert_scripts/gen-ca.sh
@@ -20,9 +20,17 @@ sh cert_scripts/gen-kube-proxy-cert.sh
 ## generate kubernetes certificate
 sh cert_scripts/gen-kubernetes-cert.sh
 
-## delete previously generated kubeconfig files
-rm -f auth_generated/*
+## create generated authentication directory
+## if it does not exists
+if [ ! -e auth_generated ]; then
+	mkdir -p auth_generated
+else
+	## delete previously generated kubeconfig files
+  rm -f auth_generated/*
+fi
 
+## generate the authentication token
+sh authentication/gen-token.sh
 
 ## generate kubeconfig files
 sh authentication/gen-kubeconfig.sh
