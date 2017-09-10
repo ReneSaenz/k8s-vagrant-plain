@@ -14,13 +14,20 @@ sh cert_scripts/gen-ca.sh
 ## generate admin client certificate
 sh cert_scripts/gen-admin-cert.sh
 
+## generate worker certificates
+sh cert_scripts/gen-worker-cert.sh
+
 ## generate kube-proxy certificate
 sh cert_scripts/gen-kube-proxy-cert.sh
 
 ## generate kubernetes certificate
 sh cert_scripts/gen-kubernetes-cert.sh
 
-## create generated authentication directory
+## generate encryption configuration yaml file
+sh authentication/gen-encrypt-config.sh
+
+### Client Authentication Configurations ###
+## Create generated authentication directory
 ## if it does not exists
 if [ ! -e auth_generated ]; then
 	mkdir -p auth_generated
@@ -33,5 +40,6 @@ fi
 sh authentication/gen-token.sh
 
 ## generate kubeconfig files
-sh authentication/gen-kubeconfig.sh
+# sh authentication/gen-kubeconfig.sh
+sh authentication/gen-worker-kubeconfig.sh
 sh authentication/gen-kube-proxy-kubeconfig.sh

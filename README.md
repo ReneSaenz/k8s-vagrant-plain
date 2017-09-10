@@ -4,7 +4,7 @@ This setup follows [Kubernetes the hard way](https://github.com/kelseyhightower/
 
 ## Cluster info
 
-- Kubernetes 1.7.4
+- Kubernetes 1.6.4
 - Docker 1.12.6
 - etcd 3.1.4
 
@@ -19,7 +19,19 @@ Since this is a local vagrant setup, no DNS and LB is setup.
 
 1. Run script to generate certificates `sh generate-certs.sh`
 2. Run `vagrant up`
-3. After all the nodes are up and provisioned, login to one of the controllers<br>`vagrant ssh controller1`
+3. After all the nodes are up and provisioned, login to one of the controllers
+and check the cluster.
+
+```
+$ vagrant ssh controller1
+$ kubectl get cs
+NAME                STATUS     MESSAGE                                                                    
+controller-manager  Healthy    ok
+scheduler           Healthy    ok
+etcd-0              Unhealthy  Get https://192.68.50.11:2379/health: remote error: tls: bad certificate
+etcd-2              Unhealthy  Get https://192.68.50.13:2379/health: remote error: tls: bad certificate
+etcd-1              Unhealthy  Get https://192.68.50.12:2379/health: remote error: tls: bad certificate
+```
 4. Perform this only on the first controller. Enable TLS bootstrap by
 binding the `kubelet-bootstrap` user to the `system:node-bootstrapper` cluster role
 

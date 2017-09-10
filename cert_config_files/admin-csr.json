@@ -10,7 +10,7 @@
       "C": "US",
       "L": "Dallas",
       "O": "system:masters",
-      "OU": "Cluster",
+      "OU": "k8s Cluster",
       "OU": "TX",
       "ST": "Texas"
     }

@@ -5,6 +5,7 @@
     "192.68.50.11",
     "192.68.50.12",
     "192.68.50.13",
+    "10.32.0.1",
     "127.0.0.1",
     "kubernetes.default"
   ],
@@ -17,7 +18,7 @@
       "C": "US",
       "L": "Dallas",
       "O": "Kubernetes",
-      "OU": "Cluster",
+      "OU": "k8s Cluster",
       "OU": "TX",
       "ST": "Texas"
     }

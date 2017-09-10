@@ -1,24 +1,24 @@
 
 ### Constants
-VAGRANT_API = "2"
-CONTROLLER_CLUSTER_IP = "10.3.0.1"
+VAGRANT_API="2"
+CONTROLLER_CLUSTER_IP="10.3.0.1"
 
-CONTROLLER1_IP= "192.68.50.11"
-CONTROLLER2_IP= "192.68.50.12"
-CONTROLLER3_IP= "192.68.50.13"
+CONTROLLER1_IP="192.68.50.11"
+CONTROLLER2_IP="192.68.50.12"
+CONTROLLER3_IP="192.68.50.13"
 
-ETCD1_NAME = "etcd1"
-ETCD2_NAME = "etcd2"
-ETCD3_NAME = "etcd3"
-ETCD1_IP = "192.68.50.11"
-ETCD2_IP = "192.68.50.12"
-ETCD3_IP = "192.68.50.13"
+ETCD1_NAME="etcd1"
+ETCD2_NAME="etcd2"
+ETCD3_NAME="etcd3"
+ETCD1_IP="192.68.50.11"
+ETCD2_IP="192.68.50.12"
+ETCD3_IP="192.68.50.13"
 
-WORKER1_IP= "192.68.50.101"
-WORKER2_IP= "192.68.50.102"
-WORKER3_IP= "192.68.50.103"
+WORKER1_IP="192.68.50.101"
+WORKER2_IP="192.68.50.102"
+WORKER3_IP="192.68.50.103"
 
-KUBERNETES_PUBLIC_ADDRESS = "192.68.50.10"
+KUBERNETES_PUBLIC_ADDRESS="192.68.50.10"
 
 
 ## Variables
@@ -26,7 +26,6 @@ $box = "ubuntu/xenial64"
 $controller_cpus = 1
 $controller_vm_memory = 1024
 
-$node_count = 3
 $node_cpus = 2
 $node_vm_memory = 2048
 
@@ -38,13 +37,27 @@ def controller_transfer_certs(controller)
   controller.vm.provision :file, :source => "certs_generated/ca-key.pem", :destination => "ca-key.pem"
   controller.vm.provision :file, :source => "certs_generated/kubernetes.pem", :destination => "kubernetes.pem"
   controller.vm.provision :file, :source => "certs_generated/kubernetes-key.pem", :destination => "kubernetes-key.pem"
+
+end
+
+def controller_transfer_token(controller)
   controller.vm.provision :file, :source => "auth_generated/token.csv", :destination => "token.csv"
+end
+
+def controller_transfer_encrypKey(controller)
+  controller.vm.provision :file, :source => "auth_generated/encryption-config.yml", :destination => "encryption-config.yml"
 end
 
 def worker_transfer_certs(worker)
   worker.vm.provision :file, :source => "certs_generated/ca.pem", :destination => "ca.pem"
   worker.vm.provision :file, :source => "certs_generated/kube-proxy.pem", :destination => "kube-proxy.pem"
   worker.vm.provision :file, :source => "certs_generated/kube-proxy-key.pem", :destination => "kube-proxy-key.pem"
+  worker.vm.provision :file, :source => "certs_generated/worker1.csr", :destination => "worker1.csr"
+  worker.vm.provision :file, :source => "certs_generated/worker1.pem", :destination => "worker1.pem"
+  worker.vm.provision :file, :source => "certs_generated/worker2.csr", :destination => "worker2.csr"
+  worker.vm.provision :file, :source => "certs_generated/worker2.pem", :destination => "worker1.pem"
+  worker.vm.provision :file, :source => "certs_generated/worker3.csr", :destination => "worker3.csr"
+  worker.vm.provision :file, :source => "certs_generated/worker3.pem", :destination => "worker1.pem"
 end
 
 def worker_transfer_kubeconfig_files(worker)
@@ -123,8 +136,10 @@ Vagrant.configure(VAGRANT_API) do |config|
 
     controller.vm.provision :shell, :path => "controller_setup_scripts/etcd-bin-install.sh"
 
+
     controller.vm.provision :shell,
                  :path => "controller_setup_scripts/etcd-svc-install.sh",
+                 :args => [ETCD2_NAME,CONTROLLER2_IP,ETCD1_IP,ETCD2_IP,ETCD3_IP]
 
     controller.vm.provision :shell,
                  :path => "controller_setup_scripts/controller-svc-install.sh",

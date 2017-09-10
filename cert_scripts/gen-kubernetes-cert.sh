@@ -5,6 +5,7 @@
 DIR_IN="cert_config_files"
 DIR_OUT="certs_generated"
 
+echo "***************************************"
 echo "*** Generate kubernetes certificate ***"
 cfssl gencert \
 -ca="$DIR_OUT/ca.pem" \
@@ -13,5 +14,6 @@ cfssl gencert \
 -profile=kubernetes \
 "$DIR_IN/kubernetes-csr.json" | cfssljson -bare "$DIR_OUT/kubernetes"
 
+echo "***************************************"
 echo "*** Verification for kubernetes.pem ***"
 openssl x509 -in "$DIR_OUT/kubernetes.pem" -text -noout
