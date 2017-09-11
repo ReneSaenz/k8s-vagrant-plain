@@ -4,6 +4,11 @@ __**NOTE:**__ These commands assume the node IPs from the `Vagrantfile` have not
 
 ### Check the cluster health
 ```
+ETCDCTL_API=3 etcdctl member list
+```
+or
+
+```
 etcdctl --ca-file=/etc/etcd/ca.pem cluster-health
 ```
 or
