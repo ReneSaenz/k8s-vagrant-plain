@@ -2,10 +2,7 @@
 
 echo "*** Setting up kubelet service ***"
 
-CONTROLLER1_IP=$1
-CONTROLLER2_IP=$2
-CONTROLLER3_IP=$3
-
+WORKER_NAME=$1
 
 cat > kubelet.service <<"EOF"
 [Unit]
@@ -16,7 +13,6 @@ Requires=docker.service
 
 [Service]
 ExecStart=/usr/bin/kubelet \
-  --api-servers=https://CONTROLLER1_IP:6443,https://CONTROLLER2_IP:6443,https://CONTROLLER3_IP:6443 \
   --allow-privileged=true \
   --cluster-dns=10.32.0.10 \
   --cluster-domain=cluster.local \
@@ -27,10 +23,11 @@ ExecStart=/usr/bin/kubelet \
   --kubeconfig=/var/lib/kubelet/kubeconfig \
   --reconcile-cidr=true \
   --serialize-image-pulls=false \
+  --image-pull-progress-deadline=2m \
   --register-node=true \
-  --tls-cert-file=/var/lib/kubelet/kubelet-client.crt \
-  --tls-private-key-file=/var/lib/kubelet/kubelet-client.key \
-  --cert-dir=/var/lib/kubelet \
+  --require-kubeconfig \
+  --tls-cert-file=/var/lib/kubelet/${WORKER_NAME}.pem \\
+  --tls-private-key-file=/var/lib/kubelet/${WORKER_NAME}-key.pem \\
   --v=2
 Restart=on-failure
 RestartSec=5
@@ -40,9 +37,7 @@ WantedBy=multi-user.target
 EOF
 
 
-sed -i s/CONTROLLER1_IP/$CONTROLLER1_IP/g kubelet.service
-sed -i s/CONTROLLER2_IP/$CONTROLLER2_IP/g kubelet.service
-sed -i s/CONTROLLER3_IP/$CONTROLLER3_IP/g kubelet.service
+sed -i s/WORKER_NAME/$WORKER_NAME/g kubelet.service
 
 
 sudo mv kubelet.service /etc/systemd/system/kubelet.service

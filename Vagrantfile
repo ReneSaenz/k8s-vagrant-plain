@@ -91,14 +91,16 @@ Vagrant.configure(VAGRANT_API) do |config|
 
     ## provision
     controller_transfer_certs(controller)
+    controller_transfer_encrypKey(controller)
 
+    controller.vm.provision :shell, :path => "controller_setup_scripts/controller-setup.sh"
+    controller.vm.provision :shell, :path => "controller_setup_scripts/control-plane-bin-install.sh"
+    controller.vm.provision :shell, :path => "controller_setup_scripts/etcd-setup.sh"
     controller.vm.provision :shell, :path => "controller_setup_scripts/etcd-bin-install.sh"
 
     controller.vm.provision :shell,
                  :path => "controller_setup_scripts/etcd-svc-install.sh",
                  :args => [ETCD1_NAME,CONTROLLER1_IP,ETCD1_IP,ETCD2_IP,ETCD3_IP]
-
-    controller.vm.provision :shell, :path => "controller_setup_scripts/control-plane-bin-install.sh"
 
     controller.vm.provision :shell,
                  :path => "controller_setup_scripts/apiserver-svc-install.sh",
@@ -130,7 +132,11 @@ Vagrant.configure(VAGRANT_API) do |config|
 
     ## provision
     controller_transfer_certs(controller)
+    controller_transfer_encrypKey(controller)
 
+    controller.vm.provision :shell, :path => "controller_setup_scripts/controller-setup.sh"
+    controller.vm.provision :shell, :path => "controller_setup_scripts/control-plane-bin-install.sh"
+    controller.vm.provision :shell, :path => "controller_setup_scripts/etcd-setup.sh"
     controller.vm.provision :shell, :path => "controller_setup_scripts/etcd-bin-install.sh"
 
 
@@ -164,7 +170,11 @@ Vagrant.configure(VAGRANT_API) do |config|
 
     ## provision
     controller_transfer_certs(controller)
+    controller_transfer_encrypKey(controller)
 
+    controller.vm.provision :shell, :path => "controller_setup_scripts/controller-setup.sh"
+    controller.vm.provision :shell, :path => "controller_setup_scripts/control-plane-bin-install.sh"
+    controller.vm.provision :shell, :path => "controller_setup_scripts/etcd-setup.sh"
     controller.vm.provision :shell, :path => "controller_setup_scripts/etcd-bin-install.sh"
 
     controller.vm.provision :shell,

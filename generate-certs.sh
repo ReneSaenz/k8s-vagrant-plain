@@ -23,9 +23,6 @@ sh cert_scripts/gen-kube-proxy-cert.sh
 ## generate kubernetes certificate
 sh cert_scripts/gen-kubernetes-cert.sh
 
-## generate encryption configuration yaml file
-sh authentication/gen-encrypt-config.sh
-
 ### Client Authentication Configurations ###
 ## Create generated authentication directory
 ## if it does not exists
@@ -35,6 +32,9 @@ else
 	## delete previously generated kubeconfig files
   rm -f auth_generated/*
 fi
+
+## generate encryption configuration yaml file
+sh authentication/gen-encrypt-config.sh
 
 ## generate the authentication token
 sh authentication/gen-token.sh
