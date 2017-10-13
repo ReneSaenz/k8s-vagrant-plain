@@ -12,6 +12,6 @@ cfssl gencert \
 -profile=kubernetes \
 "$DIR_IN/kube-proxy-csr.json" | cfssljson -bare "$DIR_OUT/kube-proxy"
 
-echo "***************************************"
-echo "*** Verification for kube-proxy.pem ***"
-openssl x509 -in "$DIR_OUT/kube-proxy.pem" -text -noout
+# echo "***************************************"
+# echo "*** Verification for kube-proxy.pem ***"
+# openssl x509 -in "$DIR_OUT/kube-proxy.pem" -text -noout

@@ -10,7 +10,7 @@
       "C": "US",
       "L": "Dallas",
       "O": "system:node-proxier",
-      "OU": "k8s Cluster",
+      "OU": "k8sCluster",
       "OU": "TX",
       "ST": "Texas"
     }

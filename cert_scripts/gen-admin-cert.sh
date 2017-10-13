@@ -12,6 +12,6 @@ cfssl gencert \
 -profile=kubernetes \
 "$DIR_IN/admin-csr.json" | cfssljson -bare "$DIR_OUT/admin"
 
-echo "**********************************"
-echo "*** Verification for admin.pem ***"
-openssl x509 -in "$DIR_OUT/admin.pem" -text -noout
+# echo "**********************************"
+# echo "*** Verification for admin.pem ***"
+# openssl x509 -in "$DIR_OUT/admin.pem" -text -noout

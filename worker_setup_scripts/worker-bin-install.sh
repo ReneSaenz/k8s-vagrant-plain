@@ -1,26 +1,25 @@
 #!/bin/bash
 
+k8sVersion="v1.6.4"
+# k8sVersion="v1.7.4"
+cniVersion="v0.5.2"
+
 echo "*** install CNI plugins ***"
 
-wget --no-verbose https://storage.googleapis.com/kubernetes-release/network-plugins/cni-amd64-0799f5732f2a11b329d9e3d51b9c8f2e3759f2ff.tar.gz
-sudo tar -xvf cni-amd64-0799f5732f2a11b329d9e3d51b9c8f2e3759f2ff.tar.gz -C /opt/cni
-
-#wget https://storage.googleapis.com/kubernetes-release/network-plugins/cni-07a8a28637e97b22eb8dfe710eeae1344f69d16e.tar.gz
-#sudo tar -xvf cni-07a8a28637e97b22eb8dfe710eeae1344f69d16e.tar.gz -C /opt/cni
+sudo mkdir -p /opt/cni
+sudo mkdir -p /etc/cni/net.d
+wget --no-verbose https://github.com/containernetworking/cni/releases/download/"$cniVersion"/cni-amd64-"$cniVersion".tgz
+sudo tar -xvf cni-amd64-"$cniVersion".tgz -C /opt/cni
 
 echo "*** download kubectl ***"
-wget --no-verbose https://storage.googleapis.com/kubernetes-release/release/v1.6.4/bin/linux/amd64/kubectl
-
+wget --no-verbose https://storage.googleapis.com/kubernetes-release/release/"$k8sVersion"/bin/linux/amd64/kubectl
 
 echo "*** download kube-proxy ***"
-wget --no-verbose https://storage.googleapis.com/kubernetes-release/release/v1.6.4/bin/linux/amd64/kube-proxy
+wget --no-verbose https://storage.googleapis.com/kubernetes-release/release/"$k8sVersion"/bin/linux/amd64/kube-proxy
 
+echo "*** download kubelet ***"
+wget --no-verbose https://storage.googleapis.com/kubernetes-release/release/"$k8sVersion"/bin/linux/amd64/kubelet
 
-echo "*** download kubectl ***"
-wget --no-verbose https://storage.googleapis.com/kubernetes-release/release/v1.6.4/bin/linux/amd64/kubelet
-
-
+echo "*** install worker-node binaries ***"
 chmod +x kubectl kube-proxy kubelet
 sudo mv kubectl kube-proxy kubelet /usr/bin/
-
-sudo mkdir -p /var/lib/kubelet

@@ -7,6 +7,8 @@ ETCD1_IP=$3
 ETCD2_IP=$4
 ETCD3_IP=$5
 
+echo "*** Configure and install etcd service ***"
+
 cat > etcd.service <<"EOF"
 [Unit]
 Description=etcd
@@ -21,8 +23,6 @@ ExecStart=/usr/bin/etcd \
   --peer-key-file=/etc/etcd/kubernetes-key.pem \
   --trusted-ca-file=/etc/etcd/ca.pem \
   --peer-trusted-ca-file=/etc/etcd/ca.pem \
-  --peer-client-cert-auth \
-  --client-cert-auth \
   --initial-advertise-peer-urls https://WORKER_IP:2380 \
   --listen-peer-urls https://WORKER_IP:2380 \
   --listen-client-urls https://WORKER_IP:2379,http://127.0.0.1:2379 \
@@ -38,6 +38,8 @@ RestartSec=5
 WantedBy=multi-user.target
 EOF
 
+# --election-timeout=5000 \
+# -–heartbeat-interval=250 \
 
 sed -i s/ETCD_NAME/$ETCD_NAME/g etcd.service
 sed -i s/WORKER_IP/$WORKER_IP/g etcd.service
@@ -46,8 +48,8 @@ sed -i s/ETCD2_IP/$ETCD2_IP/g etcd.service
 sed -i s/ETCD3_IP/$ETCD3_IP/g etcd.service
 
 
-sudo rm /etc/systemd/system/etcd.service
-sudo mv etcd.service /etc/systemd/system/etcd.service
+# sudo rm /etc/systemd/system/etcd.service
+sudo mv etcd.service /etc/systemd/system/
 sudo systemctl daemon-reload
 sudo systemctl enable etcd
 sudo systemctl start etcd

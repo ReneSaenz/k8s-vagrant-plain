@@ -18,7 +18,7 @@
       "C": "US",
       "L": "Dallas",
       "O": "Kubernetes",
-      "OU": "k8s Cluster",
+      "OU": "k8sCluster",
       "OU": "TX",
       "ST": "Texas"
     }

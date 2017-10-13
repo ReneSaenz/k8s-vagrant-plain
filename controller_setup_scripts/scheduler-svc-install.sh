@@ -1,6 +1,7 @@
 #!/bin/bash
 
-CONTROLLER_IP=$1
+
+echo "*** Configure and install kube-scheduler service ***"
 
 cat > kube-scheduler.service <<"EOF"
 [Unit]
@@ -10,7 +11,7 @@ Documentation=https://github.com/GoogleCloudPlatform/kubernetes
 [Service]
 ExecStart=/usr/bin/kube-scheduler \
   --leader-elect=true \
-  --master=http://CONTROLLER_IP:8080 \
+  --master=http://127.0.0.1:8080 \
   --v=2
 Restart=on-failure
 RestartSec=5
@@ -19,7 +20,6 @@ RestartSec=5
 WantedBy=multi-user.target
 EOF
 
-sed -i s/CONTROLLER_IP/$CONTROLLER_IP/g  kube-scheduler.service
 
 sudo mv kube-scheduler.service /etc/systemd/system/
 sudo systemctl daemon-reload

@@ -11,7 +11,7 @@ ExecStart=/usr/bin/docker daemon \
   --ip-masq=false \
   --host=unix:///var/run/docker.sock \
   --log-level=error \
-  --storage-driver=overlay
+  --storage-driver=overlay2
 Restart=on-failure
 RestartSec=5
 
@@ -20,7 +20,7 @@ WantedBy=multi-user.target
 EOF
 
 
-sudo mv docker.service /etc/systemd/system/docker.service
+sudo mv docker.service /etc/systemd/system/
 sudo systemctl daemon-reload
 sudo systemctl enable docker
 sudo systemctl start docker

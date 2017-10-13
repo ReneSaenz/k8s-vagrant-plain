@@ -1,21 +1,29 @@
 #!/bin/bash
 
-KUBERNETES_PUBLIC_ADDRESS="192.68.50.11"
+adminToken=$(head -c 16 /dev/urandom | od -An -t x | tr -d ' ')
+kubeletToken=$(head -c 16 /dev/urandom | od -An -t x | tr -d ' ')
 
-kubectl config set-cluster k8s-the-hard-way \
---certificate-authority=certs_generated/ca.pem \
---embed-certs=true \
---server=https://${KUBERNETES_PUBLIC_ADDRESS}:6443 \
---kubeconfig=auth_generated/bootstrap.kubeconfig
+cat > auth_generated/token.csv <<EOF
+$adminToken,admin,admin,"cluster-admin,system:masters"
+$kubeletToken,kubelet,kubelet,"cluster-admin,system:masters"
+EOF
 
-kubectl config set-credentials kubelet-bootstrap \
---token=auth_generated/token.csv \
---kubeconfig=auth_generated/bootstrap.kubeconfig
-
-kubectl config set-context k8s-context \
---cluster=k8s-the-hard-way \
---user=kubelet-bootstrap \
---kubeconfig=auth_generated/bootstrap.kubeconfig
-
-kubectl config use-context k8s-context \
---kubeconfig=auth_generated/bootstrap.kubeconfig
+cat > auth_generated/kubeconfig  <<EOF
+apiVersion: v1
+kind: Config
+clusters:
+- cluster:
+    certificate-authority: /var/lib/kubernetes/ca.pem
+    server: https://127.0.0.1:6443
+  name: kubernetes
+contexts:
+- context:
+    cluster: kubernetes
+    user: kubelet
+  name: kubelet
+current-context: kubelet
+users:
+- name: kubelet
+  user:
+    token: $kubeletToken
+EOF

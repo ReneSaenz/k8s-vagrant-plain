@@ -1,6 +1,9 @@
 #!/bin/bash
 
-echo "*** install Docker 1.12 ***"
-wget --no-verbose https://get.docker.com/builds/Linux/x86_64/docker-1.12.6.tgz
-tar -xvf docker-1.12.6.tgz
+
+dockerVersion="17.05.0-ce"
+
+echo "*** install Docker ***"
+wget --no-verbose https://get.docker.com/builds/Linux/x86_64/docker-"$dockerVersion".tgz
+tar -xvf docker-"$dockerVersion".tgz
 sudo cp docker/docker* /usr/bin/

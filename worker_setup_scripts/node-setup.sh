@@ -3,11 +3,11 @@
 echo "*** create /var/lib/{kubelet,kube-proxy,kubernetes} ***"
 sudo mkdir -p /var/lib/{kubelet,kube-proxy,kubernetes}
 
-echo "*** create /var/run/kubernetes ***"
-sudo mkdir -p /var/run/kubernetes
+# echo "*** create /var/run/kubernetes ***"
+# sudo mkdir -p /var/run/kubernetes
 
-echo "*** mv bootstrap.kubeconfig /var/lib/kubelet ***"
-sudo mv bootstrap.kubeconfig /var/lib/kubelet/
+# echo "*** mv bootstrap.kubeconfig /var/lib/kubelet ***"
+# sudo mv bootstrap.kubeconfig /var/lib/kubelet/
 
 echo "*** mv kube-proxy.kubeconfig /var/lib/kubelet ***"
 sudo mv kube-proxy.kubeconfig /var/lib/kube-proxy/
