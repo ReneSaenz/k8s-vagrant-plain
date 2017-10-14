@@ -46,9 +46,6 @@ def controller_transfer_token(controller)
   controller.vm.provision :file, :source => "auth_generated/token.csv", :destination => "token.csv"
 end
 
-def controller_transfer_encrypKey(controller)
-  controller.vm.provision :file, :source => "auth_generated/encryption-config.yml", :destination => "encryption-config.yml"
-end
 
 def worker_transfer_certs(worker, worker_number)
   pem_file = "worker#{worker_number}.pem"
@@ -123,7 +120,7 @@ Vagrant.configure(VAGRANT_API) do |config|
     ## provision
     controller_transfer_certs(controller)
     controller_transfer_token(controller)
-    controller_transfer_encrypKey(controller)
+
 
     controller.vm.provision :shell, :path => "controller_setup_scripts/etcd-setup.sh"
     controller.vm.provision :shell, :path => "controller_setup_scripts/etcd-bin-install.sh"
@@ -164,7 +161,7 @@ Vagrant.configure(VAGRANT_API) do |config|
     ## provision
     controller_transfer_certs(controller)
     controller_transfer_token(controller)
-    controller_transfer_encrypKey(controller)
+
 
     controller.vm.provision :shell, :path => "controller_setup_scripts/etcd-setup.sh"
     controller.vm.provision :shell, :path => "controller_setup_scripts/etcd-bin-install.sh"
@@ -207,7 +204,7 @@ Vagrant.configure(VAGRANT_API) do |config|
     ## provision
     controller_transfer_certs(controller)
     controller_transfer_token(controller)
-    controller_transfer_encrypKey(controller)
+
 
     controller.vm.provision :shell, :path => "controller_setup_scripts/etcd-setup.sh"
     controller.vm.provision :shell, :path => "controller_setup_scripts/etcd-bin-install.sh"

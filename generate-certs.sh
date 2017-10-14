@@ -11,15 +11,6 @@ fi
 ## generate CA
 sh cert_scripts/gen-ca.sh
 
-## generate admin client certificate
-# sh cert_scripts/gen-admin-cert.sh
-
-## generate worker certificates
-# sh cert_scripts/gen-worker-cert.sh
-
-## generate kube-proxy certificate
-sh cert_scripts/gen-kube-proxy-cert.sh
-
 ## generate kubernetes certificate
 sh cert_scripts/gen-kubernetes-cert.sh
 
@@ -33,13 +24,10 @@ else
   rm -f auth_generated/*
 fi
 
-## generate encryption configuration yaml file
-# sh authentication/gen-encrypt-config.sh
-
 ## generate the authentication token
 # sh authentication/gen-token.sh
 
 sh authentication/gen-kubeconfig.sh
 
 # sh authentication/gen-worker-kubeconfig.sh
-sh authentication/gen-kube-proxy-kubeconfig.sh
+# sh authentication/gen-kube-proxy-kubeconfig.sh
