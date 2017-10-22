@@ -1,5 +1,10 @@
 #!/bin/bash
 
+echo "*** create cni directories ***"
+sudo mkdir -p /opt/cni
+sudo mkdir -p /opt/cni/bin
+sudo mkdir -p /etc/cni/net.d
+
 echo "*** create /var/lib/{kubelet,kube-proxy,kubernetes} ***"
 sudo mkdir -p /var/lib/{kubelet,kube-proxy,kubernetes}
 

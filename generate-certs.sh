@@ -8,7 +8,7 @@ else
   rm -f certs_generated/*
 fi
 
-## generate CA
+## generate CA - Initialize certificate authority
 sh cert_scripts/gen-ca.sh
 
 ## generate kubernetes certificate

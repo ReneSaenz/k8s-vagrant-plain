@@ -6,10 +6,9 @@ cniVersion="v0.5.2"
 
 echo "*** install CNI plugins ***"
 
-sudo mkdir -p /opt/cni
-sudo mkdir -p /etc/cni/net.d
+
 wget --no-verbose https://github.com/containernetworking/cni/releases/download/"$cniVersion"/cni-amd64-"$cniVersion".tgz
-sudo tar -xvf cni-amd64-"$cniVersion".tgz -C /opt/cni
+sudo tar -xvf cni-amd64-"$cniVersion".tgz -C /opt/cni/net.d
 
 echo "*** download kubectl ***"
 wget --no-verbose https://storage.googleapis.com/kubernetes-release/release/"$k8sVersion"/bin/linux/amd64/kubectl
