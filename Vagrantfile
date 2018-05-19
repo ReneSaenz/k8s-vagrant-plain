@@ -1,27 +1,28 @@
 
 ### Constants
 VAGRANT_API="2"
-CONTROLLER_CLUSTER_IP="10.3.0.1"
 
-CONTROLLER1_IP="192.68.50.11"
-CONTROLLER2_IP="192.68.50.12"
-CONTROLLER3_IP="192.68.50.13"
+KUBERNETES_PUBLIC_ADDRESS="192.168.50.10"
+
+CONTROLLER1_IP="192.168.50.11"
+CONTROLLER2_IP="192.168.50.12"
+CONTROLLER3_IP="192.168.50.13"
 
 ETCD1_NAME="etcd1"
 ETCD2_NAME="etcd2"
 ETCD3_NAME="etcd3"
-ETCD1_IP="192.68.50.11"
-ETCD2_IP="192.68.50.12"
-ETCD3_IP="192.68.50.13"
+ETCD1_IP="192.168.50.11"
+ETCD2_IP="192.168.50.12"
+ETCD3_IP="192.168.50.13"
 
 WORKER1_NAME="worker1"
 WORKER2_NAME="worker2"
 WORKER3_NAME="worker3"
-WORKER1_IP="192.68.50.101"
-WORKER2_IP="192.68.50.102"
-WORKER3_IP="192.68.50.103"
+WORKER1_IP="192.168.50.101"
+WORKER2_IP="192.168.50.102"
+WORKER3_IP="192.168.50.103"
 
-KUBERNETES_PUBLIC_ADDRESS="192.68.50.10"
+
 
 
 ## Variables
@@ -52,7 +53,6 @@ def worker_transfer_certs(worker, worker_number)
   pemKey_file = "worker#{worker_number}-key.pem"
   pem_source = "certs_generated/#{pem_file}"
   pemKey_source = "certs_generated/#{pemKey_file}"
-
 
   worker.vm.provision :file, :source => "certs_generated/ca.pem", :destination => "ca.pem"
   worker.vm.provision :file, :source => "certs_generated/kube-proxy.pem", :destination => "kube-proxy.pem"

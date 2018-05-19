@@ -16,3 +16,4 @@ bin/*
 .bundle/*
 
 *.log
+certs_generated/
