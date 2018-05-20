@@ -1,5 +1,6 @@
 #!/bin/bash
 
+CONTROLLER_IP=$1
 
 echo "*** Configure and install kube-controller-manager service ***"
 
@@ -10,13 +11,14 @@ Documentation=https://github.com/GoogleCloudPlatform/kubernetes
 
 [Service]
 ExecStart=/usr/bin/kube-controller-manager \
-  --cluster-name=kubernetes \
   --address=0.0.0.0 \
-  --cluster-cidr=10.200.0.0/16 \
+  --allocate-node-cidrs=true \
+  --cluster-cidr=192.168.0.0/16 \
+  --cluster-name=kubernetes \
   --cluster-signing-cert-file=/var/lib/kubernetes/ca.pem \
   --cluster-signing-key-file=/var/lib/kubernetes/ca-key.pem \
   --leader-elect=true \
-  --master=http://127.0.0.1:8080 \
+  --master=http://CONTROLLER_IP:8080 \
   --root-ca-file=/var/lib/kubernetes/ca.pem \
   --service-account-private-key-file=/var/lib/kubernetes/ca-key.pem \
   --service-cluster-ip-range=10.32.0.0/24 \
@@ -28,6 +30,8 @@ RestartSec=5
 WantedBy=multi-user.target
 EOF
 
+
+sed -i s/CONTROLLER_IP/$CONTROLLER_IP/g kube-controller-manager.service
 
 sudo mv kube-controller-manager.service /etc/systemd/system/
 sudo systemctl daemon-reload

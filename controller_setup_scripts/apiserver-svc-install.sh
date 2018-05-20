@@ -33,11 +33,13 @@ ExecStart=/usr/bin/kube-apiserver \
   --etcd-keyfile=/var/lib/kubernetes/kubernetes-key.pem \
   --etcd-servers=https://CONTROLLER1_IP:2379,https://CONTROLLER2_IP:2379,https://CONTROLLER3_IP:2379 \
   --event-ttl=1h \
-  --insecure-bind-address=127.0.0.1 \
+  --experimental-bootstrap-token-auth \
+  --insecure-bind-address=0.0.0.0 \
   --kubelet-certificate-authority=/var/lib/kubernetes/ca.pem \
   --kubelet-client-certificate=/var/lib/kubernetes/kubernetes.pem \
   --kubelet-client-key=/var/lib/kubernetes/kubernetes-key.pem \
   --kubelet-https=true \
+  --runtime-config=rbac.authorization.k8s.io/v1alpha1 \
   --service-account-key-file=/var/lib/kubernetes/ca-key.pem \
   --service-cluster-ip-range=10.32.0.0/24 \
   --service-node-port-range=30000-32767 \

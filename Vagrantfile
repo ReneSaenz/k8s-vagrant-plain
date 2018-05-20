@@ -120,18 +120,19 @@ Vagrant.configure(VAGRANT_API) do |config|
                  :path => "controller_setup_scripts/etcd-svc-install.sh",
                  :args => [ETCD1_NAME,CONTROLLER1_IP,ETCD1_IP,ETCD2_IP,ETCD3_IP]
 
-    # controller.vm.provision :shell, :path => "controller_setup_scripts/controller-setup.sh"
-    # controller.vm.provision :shell, :path => "controller_setup_scripts/control-plane-bin-install.sh"
+    controller.vm.provision :shell, :path => "controller_setup_scripts/controller-setup.sh"
+    controller.vm.provision :shell, :path => "controller_setup_scripts/control-plane-bin-install.sh"
 
-    # controller.vm.provision :shell,
-                #  :path => "controller_setup_scripts/apiserver-svc-install.sh",
-                #  :args => [CONTROLLER1_IP,CONTROLLER1_IP,CONTROLLER2_IP,CONTROLLER3_IP]
+    controller.vm.provision :shell,
+                 :path => "controller_setup_scripts/apiserver-svc-install.sh",
+                 :args => [CONTROLLER1_IP,CONTROLLER1_IP,CONTROLLER2_IP,CONTROLLER3_IP]
 
-    # controller.vm.provision :shell,
-                #  :path => "controller_setup_scripts/controller-svc-install.sh"
+    controller.vm.provision :shell,
+                 :path => "controller_setup_scripts/controller-svc-install.sh",
+                 :args => [CONTROLLER1_IP]
 
-    # controller.vm.provision :shell,
-                #  :path => "controller_setup_scripts/scheduler-svc-install.sh"
+    controller.vm.provision :shell,
+                 :path => "controller_setup_scripts/scheduler-svc-install.sh"
 
   end
 
@@ -162,18 +163,19 @@ Vagrant.configure(VAGRANT_API) do |config|
                  :args => [ETCD2_NAME,CONTROLLER2_IP,ETCD1_IP,ETCD2_IP,ETCD3_IP]
 
 
-    # controller.vm.provision :shell, :path => "controller_setup_scripts/controller-setup.sh"
-    # controller.vm.provision :shell, :path => "controller_setup_scripts/control-plane-bin-install.sh"
+    controller.vm.provision :shell, :path => "controller_setup_scripts/controller-setup.sh"
+    controller.vm.provision :shell, :path => "controller_setup_scripts/control-plane-bin-install.sh"
 
-    # controller.vm.provision :shell,
-                #  :path => "controller_setup_scripts/apiserver-svc-install.sh",
-                #  :args => [CONTROLLER2_IP,CONTROLLER1_IP,CONTROLLER2_IP,CONTROLLER3_IP]
+    controller.vm.provision :shell,
+                 :path => "controller_setup_scripts/apiserver-svc-install.sh",
+                 :args => [CONTROLLER2_IP,CONTROLLER1_IP,CONTROLLER2_IP,CONTROLLER3_IP]
 
-    # controller.vm.provision :shell,
-                #  :path => "controller_setup_scripts/controller-svc-install.sh"
+    controller.vm.provision :shell,
+                 :path => "controller_setup_scripts/controller-svc-install.sh",
+                 :args => [CONTROLLER2_IP]
 
-    # controller.vm.provision :shell,
-                #  :path => "controller_setup_scripts/scheduler-svc-install.sh"
+    controller.vm.provision :shell,
+                 :path => "controller_setup_scripts/scheduler-svc-install.sh"
 
   end
 
@@ -204,18 +206,19 @@ Vagrant.configure(VAGRANT_API) do |config|
                  :args => [ETCD3_NAME,CONTROLLER3_IP,ETCD1_IP,ETCD2_IP,ETCD3_IP]
 
 
-    # controller.vm.provision :shell, :path => "controller_setup_scripts/controller-setup.sh"
-    # controller.vm.provision :shell, :path => "controller_setup_scripts/control-plane-bin-install.sh"
+    controller.vm.provision :shell, :path => "controller_setup_scripts/controller-setup.sh"
+    controller.vm.provision :shell, :path => "controller_setup_scripts/control-plane-bin-install.sh"
 
-    # controller.vm.provision :shell,
-                #  :path => "controller_setup_scripts/apiserver-svc-install.sh",
-                #  :args => [CONTROLLER3_IP,CONTROLLER1_IP,CONTROLLER2_IP,CONTROLLER3_IP]
+    controller.vm.provision :shell,
+                 :path => "controller_setup_scripts/apiserver-svc-install.sh",
+                 :args => [CONTROLLER3_IP,CONTROLLER1_IP,CONTROLLER2_IP,CONTROLLER3_IP]
 
-    # controller.vm.provision :shell,
-                #  :path => "controller_setup_scripts/controller-svc-install.sh"
+    controller.vm.provision :shell,
+                 :path => "controller_setup_scripts/controller-svc-install.sh",
+                 :args => [CONTROLLER3_IP]
 
-    # controller.vm.provision :shell,
-                #  :path => "controller_setup_scripts/scheduler-svc-install.sh"
+    controller.vm.provision :shell,
+                 :path => "controller_setup_scripts/scheduler-svc-install.sh"
 
   end
 
