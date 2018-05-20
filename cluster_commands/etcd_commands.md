@@ -18,7 +18,7 @@ sudo etcdctl  \
 --cert-file=/etc/etcd/kubernetes.pem  \
 --key-file=/etc/etcd/kubernetes-key.pem  \
 --ca-file=/etc/etcd/ca.pem  \
---peers="https:192.68.50.11:2379,https://192.68.50.12:2379,https://192.68.50.13:2379"  \
+--peers="https:192.168.50.11:2379,https://192.168.50.12:2379,https://192.168.50.13:2379"  \
 cluster-health
 ```
 
@@ -28,7 +28,7 @@ sudo etcdctl  \
 --cert-file=/etc/etcd/kubernetes.pem  \
 --key-file=/etc/etcd/kubernetes-key.pem  \
 --ca-file=/etc/etcd/ca.pem  \
---peers="https:192.68.50.11:2379,https://192.68.50.12:2379,https://192.68.50.13:2379"  \
+--peers="https:192.168.50.11:2379,https://192.168.50.12:2379,https://192.168.50.13:2379"  \
 member list
 ```
 
@@ -39,7 +39,7 @@ sudo etcdctl  \
 --cert-file=/etc/etcd/kubernetes.pem  \
 --key-file=/etc/etcd/kubernetes-key.pem  \
 --ca-file=/etc/etcd/ca.pem  \
---peers="https:192.68.50.11:2379,https://192.68.50.12:2379,https://192.68.50.13:2379"  \
+--peers="https:192.168.50.11:2379,https://192.168.50.12:2379,https://192.168.50.13:2379"  \
 ls / --recursive
 ```
 
@@ -50,7 +50,7 @@ sudo etcdctl  \
 --cert-file=/etc/etcd/kubernetes.pem  \
 --key-file=/etc/etcd/kubernetes-key.pem  \
 --ca-file=/etc/etcd/ca.pem  \
---peers="https:192.68.50.11:2379,https://192.68.50.12:2379,https://192.68.50.13:2379"  \
+--peers="https:192.168.50.11:2379,https://192.168.50.12:2379,https://192.168.50.13:2379"  \
 mkdir /test
 ```
 
@@ -61,7 +61,7 @@ sudo etcdctl  \
 --cert-file=/etc/etcd/kubernetes.pem  \
 --key-file=/etc/etcd/kubernetes-key.pem  \
 --ca-file=/etc/etcd/ca.pem  \
---peers="https:192.68.50.11:2379,https://192.68.50.12:2379,https://192.68.50.13:2379"  \
+--peers="https:192.168.50.11:2379,https://192.168.50.12:2379,https://192.168.50.13:2379"  \
 mk /test/key rock
 ```
 
@@ -72,6 +72,6 @@ sudo etcdctl  \
 --cert-file=/etc/etcd/kubernetes.pem  \
 --key-file=/etc/etcd/kubernetes-key.pem  \
 --ca-file=/etc/etcd/ca.pem  \
---peers="https:192.68.50.11:2379,https://192.68.50.12:2379,https://192.68.50.13:2379"  \
+--peers="https:192.168.50.11:2379,https://192.168.50.12:2379,https://192.168.50.13:2379"  \
 get /test/key
 ```

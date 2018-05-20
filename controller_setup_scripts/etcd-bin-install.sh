@@ -1,7 +1,7 @@
 #!/bin/bash
 
 
-etcdVersion="v3.2.6"
+etcdVersion="v3.1.4"
 
 echo "*** download etcd release binaries from coreos/etcd ***"
 wget -q --no-verbose --https-only --timestamping \

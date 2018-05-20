@@ -52,9 +52,6 @@ def worker_transfer_certs(worker)
   worker.vm.provision :file, :source => "certs_generated/ca.pem", :destination => "ca.pem"
   worker.vm.provision :file, :source => "certs_generated/kube-proxy.pem", :destination => "kube-proxy.pem"
   worker.vm.provision :file, :source => "certs_generated/kube-proxy-key.pem", :destination => "kube-proxy-key.pem"
-
-  # worker.vm.provision :file, :source => pem_source, :destination => pem_file
-  # worker.vm.provision :file, :source => pemKey_source, :destination => pemKey_file
 end
 
 def worker_transfer_kubeconfig_files(worker, worker_number)
@@ -123,18 +120,18 @@ Vagrant.configure(VAGRANT_API) do |config|
                  :path => "controller_setup_scripts/etcd-svc-install.sh",
                  :args => [ETCD1_NAME,CONTROLLER1_IP,ETCD1_IP,ETCD2_IP,ETCD3_IP]
 
-    controller.vm.provision :shell, :path => "controller_setup_scripts/controller-setup.sh"
-    controller.vm.provision :shell, :path => "controller_setup_scripts/control-plane-bin-install.sh"
+    # controller.vm.provision :shell, :path => "controller_setup_scripts/controller-setup.sh"
+    # controller.vm.provision :shell, :path => "controller_setup_scripts/control-plane-bin-install.sh"
 
-    controller.vm.provision :shell,
-                 :path => "controller_setup_scripts/apiserver-svc-install.sh",
-                 :args => [CONTROLLER1_IP,CONTROLLER1_IP,CONTROLLER2_IP,CONTROLLER3_IP]
+    # controller.vm.provision :shell,
+                #  :path => "controller_setup_scripts/apiserver-svc-install.sh",
+                #  :args => [CONTROLLER1_IP,CONTROLLER1_IP,CONTROLLER2_IP,CONTROLLER3_IP]
 
-    controller.vm.provision :shell,
-                 :path => "controller_setup_scripts/controller-svc-install.sh"
+    # controller.vm.provision :shell,
+                #  :path => "controller_setup_scripts/controller-svc-install.sh"
 
-    controller.vm.provision :shell,
-                 :path => "controller_setup_scripts/scheduler-svc-install.sh"
+    # controller.vm.provision :shell,
+                #  :path => "controller_setup_scripts/scheduler-svc-install.sh"
 
   end
 
@@ -165,19 +162,18 @@ Vagrant.configure(VAGRANT_API) do |config|
                  :args => [ETCD2_NAME,CONTROLLER2_IP,ETCD1_IP,ETCD2_IP,ETCD3_IP]
 
 
-    controller.vm.provision :shell, :path => "controller_setup_scripts/controller-setup.sh"
-    controller.vm.provision :shell, :path => "controller_setup_scripts/control-plane-bin-install.sh"
+    # controller.vm.provision :shell, :path => "controller_setup_scripts/controller-setup.sh"
+    # controller.vm.provision :shell, :path => "controller_setup_scripts/control-plane-bin-install.sh"
 
-    controller.vm.provision :shell,
-                 :path => "controller_setup_scripts/apiserver-svc-install.sh",
-                 :args => [CONTROLLER2_IP,CONTROLLER1_IP,CONTROLLER2_IP,CONTROLLER3_IP]
+    # controller.vm.provision :shell,
+                #  :path => "controller_setup_scripts/apiserver-svc-install.sh",
+                #  :args => [CONTROLLER2_IP,CONTROLLER1_IP,CONTROLLER2_IP,CONTROLLER3_IP]
 
-    controller.vm.provision :shell,
-                 :path => "controller_setup_scripts/controller-svc-install.sh"
+    # controller.vm.provision :shell,
+                #  :path => "controller_setup_scripts/controller-svc-install.sh"
 
-
-    controller.vm.provision :shell,
-                 :path => "controller_setup_scripts/scheduler-svc-install.sh"
+    # controller.vm.provision :shell,
+                #  :path => "controller_setup_scripts/scheduler-svc-install.sh"
 
   end
 
@@ -208,19 +204,18 @@ Vagrant.configure(VAGRANT_API) do |config|
                  :args => [ETCD3_NAME,CONTROLLER3_IP,ETCD1_IP,ETCD2_IP,ETCD3_IP]
 
 
-    controller.vm.provision :shell, :path => "controller_setup_scripts/controller-setup.sh"
-    controller.vm.provision :shell, :path => "controller_setup_scripts/control-plane-bin-install.sh"
+    # controller.vm.provision :shell, :path => "controller_setup_scripts/controller-setup.sh"
+    # controller.vm.provision :shell, :path => "controller_setup_scripts/control-plane-bin-install.sh"
 
-    controller.vm.provision :shell,
-                 :path => "controller_setup_scripts/apiserver-svc-install.sh",
-                 :args => [CONTROLLER3_IP,CONTROLLER1_IP,CONTROLLER2_IP,CONTROLLER3_IP]
+    # controller.vm.provision :shell,
+                #  :path => "controller_setup_scripts/apiserver-svc-install.sh",
+                #  :args => [CONTROLLER3_IP,CONTROLLER1_IP,CONTROLLER2_IP,CONTROLLER3_IP]
 
-    controller.vm.provision :shell,
-                 :path => "controller_setup_scripts/controller-svc-install.sh"
+    # controller.vm.provision :shell,
+                #  :path => "controller_setup_scripts/controller-svc-install.sh"
 
-
-    controller.vm.provision :shell,
-                 :path => "controller_setup_scripts/scheduler-svc-install.sh"
+    # controller.vm.provision :shell,
+                #  :path => "controller_setup_scripts/scheduler-svc-install.sh"
 
   end
 
@@ -230,114 +225,114 @@ Vagrant.configure(VAGRANT_API) do |config|
   ### Configure workers
   #########################################
 
-  config.vm.define "worker1" do |worker|
-    worker.vm.provider :virtualbox do |vb|
-      vb.gui = false
-      vb.name = "k8Worker1"
-      vb.cpus = $worker_cpus
-      vb.memory = $worker_vm_memory
-    end
+  # config.vm.define "worker1" do |worker|
+    # worker.vm.provider :virtualbox do |vb|
+      # vb.gui = false
+      # vb.name = "k8Worker1"
+      # vb.cpus = $worker_cpus
+      # vb.memory = $worker_vm_memory
+    # end
 
     ## VM hostname
-    worker.vm.box = $box
-    worker.vm.hostname = "k8Worker1"
+    # worker.vm.box = $box
+    # worker.vm.hostname = "k8Worker1"
 
     ## Network config
-    worker.vm.network :private_network, ip: WORKER1_IP
+    # worker.vm.network :private_network, ip: WORKER1_IP
 
     ## provision
-    worker_transfer_certs(worker, 1)
-    worker_transfer_kubeconfig_files(worker, 1)
-    worker.vm.provision :shell, :path => "worker_setup_scripts/worker-setup.sh",
-                        :args => [WORKER1_NAME]
-    worker.vm.provision :shell, :path => "worker_setup_scripts/worker-bin-install.sh"
-    worker.vm.provision :shell, :path => "worker_setup_scripts/docker-bin-install.sh"
-    worker.vm.provision :shell, :path => "worker_setup_scripts/docker-svc-install.sh"
-    worker.vm.provision :shell,
-                        :path => "worker_setup_scripts/kubeproxy-svc-install.sh"
-    worker.vm.provision :shell,
-                        :path => "worker_setup_scripts/kubelet-svc-install.sh",
-                        :args => [WORKER1_NAME]
+    # worker_transfer_certs(worker, 1)
+    # worker_transfer_kubeconfig_files(worker, 1)
+    # worker.vm.provision :shell, :path => "worker_setup_scripts/worker-setup.sh",
+                        # :args => [WORKER1_NAME]
+    # worker.vm.provision :shell, :path => "worker_setup_scripts/worker-bin-install.sh"
+    # worker.vm.provision :shell, :path => "worker_setup_scripts/docker-bin-install.sh"
+    # worker.vm.provision :shell, :path => "worker_setup_scripts/docker-svc-install.sh"
+    # worker.vm.provision :shell,
+                        # :path => "worker_setup_scripts/kubeproxy-svc-install.sh"
+    # worker.vm.provision :shell,
+                        # :path => "worker_setup_scripts/kubelet-svc-install.sh",
+                        # :args => [WORKER1_NAME]
 
-  end
+  # end
 
-  config.vm.define "worker2" do |worker|
-    worker.vm.provider :virtualbox do |vb|
-      vb.gui = false
-      vb.name = "k8Worker2"
-      vb.cpus = $worker_cpus
-      vb.memory = $worker_vm_memory
-    end
+  # config.vm.define "worker2" do |worker|
+    # worker.vm.provider :virtualbox do |vb|
+      # vb.gui = false
+      # vb.name = "k8Worker2"
+      # vb.cpus = $worker_cpus
+      # vb.memory = $worker_vm_memory
+    # end
 
     ## VM hostname
-    worker.vm.box = $box
-    worker.vm.hostname = "k8Worker2"
+    # worker.vm.box = $box
+    # worker.vm.hostname = "k8Worker2"
 
     ## Network config
-    worker.vm.network :private_network, ip: WORKER2_IP
+    # worker.vm.network :private_network, ip: WORKER2_IP
 
     ## provision
-    worker_transfer_certs(worker, 2)
-    worker_transfer_kubeconfig_files(worker, 2)
+    # worker_transfer_certs(worker, 2)
+    # worker_transfer_kubeconfig_files(worker, 2)
     # worker.vm.provision :file, :source => "auth_generated/kube-proxy.kubeconfig", :destination => "kube-proxy.kubeconfig"
     # worker.vm.provision :file, :source => "certs_generated/worker2.pem", :destination => "worker2.pem"
     # worker.vm.provision :file, :source => "certs_generated/worker2-key.pem", :destination => "worker2-key.pem"
 
-    worker.vm.provision :shell, inline: "sudo mkdir -p /opt/cni"
-    worker.vm.provision :shell, inline: "sudo mkdir -p /var/lib/{kubelet,kube-proxy,kubernetes}"
-    worker.vm.provision :shell, inline: "sudo mv ca.pem /var/lib/kubernetes/"
-    worker.vm.provision :shell, inline: "sudo mv kube-proxy.kubeconfig /var/lib/kube-proxy/kubeconfig"
-    worker.vm.provision :shell, inline: "sudo mv kube-proxy.pem kube-proxy-key.pem /var/lib/kubernetes/"
-    worker.vm.provision :shell, inline: "sudo mv worker2.pem /var/lib/kubelet"
-    worker.vm.provision :shell, inline: "sudo mv worker2-key.pem /var/lib/kubelet"
-    worker.vm.provision :shell, :path => "worker_setup_scripts/worker-bin-install.sh"
-    worker.vm.provision :shell, :path => "worker_setup_scripts/docker-bin-install.sh"
-    worker.vm.provision :shell, :path => "worker_setup_scripts/docker-svc-install.sh"
-    worker.vm.provision :shell, :path => "worker_setup_scripts/kubeproxy-svc-install.sh"
-    worker.vm.provision :shell,
-                        :path => "worker_setup_scripts/kubelet-svc-install.sh",
-                        :args => [WORKER2_NAME]
+    # worker.vm.provision :shell, inline: "sudo mkdir -p /opt/cni"
+    # worker.vm.provision :shell, inline: "sudo mkdir -p /var/lib/{kubelet,kube-proxy,kubernetes}"
+    # worker.vm.provision :shell, inline: "sudo mv ca.pem /var/lib/kubernetes/"
+    # worker.vm.provision :shell, inline: "sudo mv kube-proxy.kubeconfig /var/lib/kube-proxy/kubeconfig"
+    # worker.vm.provision :shell, inline: "sudo mv kube-proxy.pem kube-proxy-key.pem /var/lib/kubernetes/"
+    # worker.vm.provision :shell, inline: "sudo mv worker2.pem /var/lib/kubelet"
+    # worker.vm.provision :shell, inline: "sudo mv worker2-key.pem /var/lib/kubelet"
+    # worker.vm.provision :shell, :path => "worker_setup_scripts/worker-bin-install.sh"
+    # worker.vm.provision :shell, :path => "worker_setup_scripts/docker-bin-install.sh"
+    # worker.vm.provision :shell, :path => "worker_setup_scripts/docker-svc-install.sh"
+    # worker.vm.provision :shell, :path => "worker_setup_scripts/kubeproxy-svc-install.sh"
+    # worker.vm.provision :shell,
+                        # :path => "worker_setup_scripts/kubelet-svc-install.sh",
+                        # :args => [WORKER2_NAME]
 
-  end
+  # end
 
-  config.vm.define "worker3" do |worker|
-    worker.vm.provider :virtualbox do |vb|
-      vb.gui = false
-      vb.name = "k8Worker3"
-      vb.cpus = $worker_cpus
-      vb.memory = $worker_vm_memory
-    end
+  # config.vm.define "worker3" do |worker|
+    # worker.vm.provider :virtualbox do |vb|
+      # vb.gui = false
+      # vb.name = "k8Worker3"
+      # vb.cpus = $worker_cpus
+      # vb.memory = $worker_vm_memory
+    # end
 
     ## VM hostname
-    worker.vm.box = $box
-    worker.vm.hostname = "k8Worker3"
+    # worker.vm.box = $box
+    # worker.vm.hostname = "k8Worker3"
 
     ## Network config
-    worker.vm.network :private_network, ip: WORKER3_IP
+    # worker.vm.network :private_network, ip: WORKER3_IP
 
     ## provision
-    worker_transfer_certs(worker, 3)
-    worker_transfer_kubeconfig_files(worker, 3)
+    # worker_transfer_certs(worker, 3)
+    # worker_transfer_kubeconfig_files(worker, 3)
     # worker.vm.provision :file, :source => "auth_generated/kube-proxy.kubeconfig", :destination => "kube-proxy.kubeconfig"
     # worker.vm.provision :file, :source => "auth_generated/worker3.kubeconfig", :destination => "worker3.kubeconfig"
     # worker.vm.provision :file, :source => "certs_generated/worker3.pem", :destination => "worker3.pem"
     # worker.vm.provision :file, :source => "certs_generated/worker3-key.pem", :destination => "worker3-key.pem"
 
-    worker.vm.provision :shell, inline: "sudo mkdir -p /opt/cni"
-    worker.vm.provision :shell, inline: "sudo mkdir -p /var/lib/{kubelet,kube-proxy,kubernetes}"
-    worker.vm.provision :shell, inline: "sudo mv ca.pem /var/lib/kubernetes/"
-    worker.vm.provision :shell, inline: "sudo mv kube-proxy.kubeconfig /var/lib/kube-proxy/kubeconfig"
-    worker.vm.provision :shell, inline: "sudo mv kube-proxy.pem kube-proxy-key.pem /var/lib/kubernetes/"
-    worker.vm.provision :shell, inline: "sudo mv worker3.pem /var/lib/kubelet"
-    worker.vm.provision :shell, inline: "sudo mv worker3-key.pem /var/lib/kubelet"
-    worker.vm.provision :shell, :path => "worker_setup_scripts/worker-bin-install.sh"
-    worker.vm.provision :shell, :path => "worker_setup_scripts/docker-bin-install.sh"
-    worker.vm.provision :shell, :path => "worker_setup_scripts/docker-svc-install.sh"
-    worker.vm.provision :shell, :path => "worker_setup_scripts/kubeproxy-svc-install.sh"
-    worker.vm.provision :shell,
-                        :path => "worker_setup_scripts/kubelet-svc-install.sh",
-                        :args => [WORKER3_NAME]
+    # worker.vm.provision :shell, inline: "sudo mkdir -p /opt/cni"
+    # worker.vm.provision :shell, inline: "sudo mkdir -p /var/lib/{kubelet,kube-proxy,kubernetes}"
+    # worker.vm.provision :shell, inline: "sudo mv ca.pem /var/lib/kubernetes/"
+    # worker.vm.provision :shell, inline: "sudo mv kube-proxy.kubeconfig /var/lib/kube-proxy/kubeconfig"
+    # worker.vm.provision :shell, inline: "sudo mv kube-proxy.pem kube-proxy-key.pem /var/lib/kubernetes/"
+    # worker.vm.provision :shell, inline: "sudo mv worker3.pem /var/lib/kubelet"
+    # worker.vm.provision :shell, inline: "sudo mv worker3-key.pem /var/lib/kubelet"
+    # worker.vm.provision :shell, :path => "worker_setup_scripts/worker-bin-install.sh"
+    # worker.vm.provision :shell, :path => "worker_setup_scripts/docker-bin-install.sh"
+    # worker.vm.provision :shell, :path => "worker_setup_scripts/docker-svc-install.sh"
+    # worker.vm.provision :shell, :path => "worker_setup_scripts/kubeproxy-svc-install.sh"
+    # worker.vm.provision :shell,
+                        # :path => "worker_setup_scripts/kubelet-svc-install.sh",
+                        # :args => [WORKER3_NAME]
 
-  end
+  # end
 
 end

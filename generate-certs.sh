@@ -22,8 +22,8 @@ sh cert_scripts/gen-kubernetes-cert.sh
 #######################################################
 
 ### Client Authentication Configurations ###
-## Create generated authentication directory
 
+## Create generated authentication directory
 if [ ! -e auth_generated ]; then
 	mkdir -p auth_generated
 else
