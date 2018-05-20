@@ -1,29 +1,23 @@
 #!/bin/bash
 
-adminToken=$(head -c 16 /dev/urandom | od -An -t x | tr -d ' ')
-kubeletToken=$(head -c 16 /dev/urandom | od -An -t x | tr -d ' ')
+AUTH_DIR="auth_generated"
+CERT_DIR="certs_generated"
+KUBERNETES_PUBLIC_ADDRESS="192.168.50.10"
 
-cat > auth_generated/token.csv <<EOF
-$adminToken,admin,admin,"cluster-admin,system:masters"
-$kubeletToken,kubelet,kubelet,"cluster-admin,system:masters"
-EOF
+kubectl config set-cluster local-vagrant-cluster \
+--certificate-authority=${CERT_DIR}/ca.pem \
+--embed-certs=true \
+--server=https://${KUBERNETES_PUBLIC_ADDRESS}:6443 \
+--kubeconfig=${AUTH_DIR}/bootstrap.kubeconfig
 
-cat > auth_generated/kubeconfig  <<EOF
-apiVersion: v1
-kind: Config
-clusters:
-- cluster:
-    certificate-authority: /var/lib/kubernetes/ca.pem
-    server: https://127.0.0.1:6443
-  name: kubernetes
-contexts:
-- context:
-    cluster: kubernetes
-    user: kubelet
-  name: kubelet
-current-context: kubelet
-users:
-- name: kubelet
-  user:
-    token: $kubeletToken
-EOF
+kubectl config set-credentials kubelet-bootstrap \
+--token=${AUTH_DIR}/token.csv \
+--kubeconfig=${AUTH_DIR}/bootstrap.kubeconfig
+
+kubectl config set-context k8s-context \
+--cluster=local-vagrant-cluster \
+--user=kubelet-bootstrap \
+--kubeconfig=${AUTH_DIR}/bootstrap.kubeconfig
+
+kubectl config use-context k8s-context \
+--kubeconfig=${AUTH_DIR}/kubelet-bootstrap

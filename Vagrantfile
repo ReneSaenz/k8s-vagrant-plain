@@ -48,18 +48,13 @@ def controller_transfer_token(controller)
 end
 
 
-def worker_transfer_certs(worker, worker_number)
-  pem_file = "worker#{worker_number}.pem"
-  pemKey_file = "worker#{worker_number}-key.pem"
-  pem_source = "certs_generated/#{pem_file}"
-  pemKey_source = "certs_generated/#{pemKey_file}"
-
+def worker_transfer_certs(worker)
   worker.vm.provision :file, :source => "certs_generated/ca.pem", :destination => "ca.pem"
   worker.vm.provision :file, :source => "certs_generated/kube-proxy.pem", :destination => "kube-proxy.pem"
   worker.vm.provision :file, :source => "certs_generated/kube-proxy-key.pem", :destination => "kube-proxy-key.pem"
 
-  worker.vm.provision :file, :source => pem_source, :destination => pem_file
-  worker.vm.provision :file, :source => pemKey_source, :destination => pemKey_file
+  # worker.vm.provision :file, :source => pem_source, :destination => pem_file
+  # worker.vm.provision :file, :source => pemKey_source, :destination => pemKey_file
 end
 
 def worker_transfer_kubeconfig_files(worker, worker_number)
