@@ -2,6 +2,9 @@
 
 This setup follows [Kubernetes the hard way](https://github.com/kelseyhightower/kubernetes-the-hard-way)
 
+
+> NOTE: WIP
+
 ## Cluster info
 
 - Kubernetes 1.6.4

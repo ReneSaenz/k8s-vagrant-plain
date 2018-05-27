@@ -23,8 +23,6 @@ WORKER2_IP="192.168.50.102"
 WORKER3_IP="192.168.50.103"
 
 
-
-
 ## Variables
 $box = "ubuntu/xenial64"
 $controller_cpus = 1
