@@ -11,7 +11,7 @@ ExecStart=/usr/bin/docker daemon \
   --ip-masq=false \
   --host=unix:///var/run/docker.sock \
   --log-level=error \
-  --storage-driver=overlay2
+  --storage-driver=overlay
 Restart=on-failure
 RestartSec=5
 

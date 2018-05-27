@@ -1,14 +1,13 @@
 .project
-.idea
+.idea/
 .chef
 .arcconfig
-.vagrant
+.vagrant/
 **/.DS_Store
 .rspec
 .DS_Store
 
-# Berkshelf
-.vagrant
+.git/
 Berksfile.lock
 
 # Bundler

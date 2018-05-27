@@ -13,20 +13,19 @@ Requires=docker.service
 
 [Service]
 ExecStart=/usr/bin/kubelet \
+  --api-servers=https://127.0.0.1:8080 \
   --allow-privileged=true \
   --cluster-dns=10.32.0.10 \
   --cluster-domain=cluster.local \
   --container-runtime=docker \
-  --docker=unix:///var/run/docker.sock
-  --network-plugin=cni \
-  --network-plugin-dir=/opt/cni
+  --experimental-bootstrap-kubeconfig=/var/lib/kubelet/bootstrap.kubeconfig \
+  --network-plugin=kubenet \
   --kubeconfig=/var/lib/kubelet/kubeconfig \
-  --reconcile-cidr=true \
   --serialize-image-pulls=false \
-  --image-pull-progress-deadline=2m \
-  --api-servers=http://127.0.0.1:8080 \
-  --tls-cert-file=/var/lib/kubelet/WORKER_NAME.pem \
-  --tls-private-key-file=/var/lib/kubelet/WORKER_NAME-key.pem \
+  --register-node=true \
+  --tls-cert-file=/var/lib/kubelet/kubelet-client.crt \
+  --tls-private-key-file=/var/lib/kubelet/kubelet-client.key \
+  --cert-dir=/var/lib.kubelet \
   --v=2
 Restart=on-failure
 RestartSec=5
